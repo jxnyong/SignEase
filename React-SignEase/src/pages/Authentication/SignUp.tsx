@@ -151,7 +151,7 @@ const SignUp = () => {
               </h2>
 
               <form>
-              <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
+                <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
                       First name
@@ -174,6 +174,7 @@ const SignUp = () => {
                     />
                   </div>
                 </div>
+
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Name

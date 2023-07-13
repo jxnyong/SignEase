@@ -16,7 +16,8 @@ const SignIn = () => {
 
               <p className="2xl:px-20">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+                suspendisse. 
+                Welcome to SignEase! Enjoy a place where you sign freely
               </p>
 
               <span className="mt-15 inline-block">
@@ -146,7 +147,7 @@ const SignIn = () => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <span className="mb-1.5 block font-medium">Start for free</span>
+              <span className="mb-1.5 block font-medium">SignEase, Sign Anywhere!</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 Sign In to SignEase
               </h2>
@@ -185,12 +186,12 @@ const SignIn = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Re-type Password
+                    Password
                   </label>
                   <div className="relative">
                     <input
                       type="password"
-                      placeholder="6+ Characters, 1 Capital letter"
+                      placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
 
@@ -216,6 +217,42 @@ const SignIn = () => {
                       </svg>
                     </span>
                   </div>
+                </div>
+
+                <div className="mt-5 mb-5.5 flex items-center justify-between">
+                  <label htmlFor="formCheckbox" className="flex cursor-pointer">
+                    <div className="relative pt-0.5">
+                      <input
+                        type="checkbox"
+                        id="formCheckbox"
+                        className="taskCheckbox sr-only"
+                      />
+                      <div className="box mr-3 flex h-5 w-5 items-center justify-center rounded border border-stroke dark:border-strokedark">
+                        <span className="text-white opacity-0">
+                          <svg
+                            className="fill-current"
+                            width="10"
+                            height="7"
+                            viewBox="0 0 10 7"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M9.70685 0.292804C9.89455 0.480344 10 0.734667 10 0.999847C10 1.26503 9.89455 1.51935 9.70685 1.70689L4.70059 6.7072C4.51283 6.89468 4.2582 7 3.9927 7C3.72721 7 3.47258 6.89468 3.28482 6.7072L0.281063 3.70701C0.0986771 3.5184 -0.00224342 3.26578 3.785e-05 3.00357C0.00231912 2.74136 0.10762 2.49053 0.29326 2.30511C0.4789 2.11969 0.730026 2.01451 0.992551 2.01224C1.25508 2.00996 1.50799 2.11076 1.69683 2.29293L3.9927 4.58607L8.29108 0.292804C8.47884 0.105322 8.73347 0 8.99896 0C9.26446 0 9.51908 0.105322 9.70685 0.292804Z"
+                              fill=""
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <p>Remember me</p>
+                  </label>
+
+                  <a href="#" className="text-sm text-primary">
+                    Forget password?
+                  </a>
                 </div>
 
                 <div className="mb-5">
