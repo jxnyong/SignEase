@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@hookform/error-message": "^2.0.1",
+    "axios": "^1.4.0",
+    "react-hook-form": "^7.45.2",
+    "react-player": "^2.12.0",
+    "react-select": "^5.7.4",
+    "react-video": "^1.5.3"
+  }
+}
