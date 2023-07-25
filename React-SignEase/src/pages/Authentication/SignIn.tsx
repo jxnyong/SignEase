@@ -1,8 +1,41 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/signin', {
+        email,
+        password,
+      });
+      // console.log(response.data);
+
+      if (response.data.success) {
+        // store the token in the local storage
+        localStorage.setItem('token', response.data.access_token);
+        // console.log(localStorage.getItem('token'));
+
+        // redirect user to the home page (or dashboard, etc.)
+        navigate('/');
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+        
+    }
+  };
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -16,7 +49,7 @@ const SignIn = () => {
 
               <p className="2xl:px-20">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse. 
+                suspendisse.
                 Welcome to SignEase! Enjoy a place where you sign freely
               </p>
 
@@ -152,7 +185,8 @@ const SignIn = () => {
                 Sign In to SignEase
               </h2>
 
-              <form>
+              {/* Sign-In Form */}
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
@@ -162,6 +196,8 @@ const SignIn = () => {
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <span className="absolute right-4 top-4">
@@ -193,6 +229,8 @@ const SignIn = () => {
                       type="password"
                       placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
 
                     <span className="absolute right-4 top-4">
