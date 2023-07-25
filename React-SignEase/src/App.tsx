@@ -13,6 +13,8 @@ const FormLayout = lazy(() => import('./pages/Form/FormLayout'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Settings = lazy(() => import('./pages/Settings'));
 const Tables = lazy(() => import('./pages/Tables'));
+const SignDictionary = lazy(() => import('./pages/SignDictionary'));
+const TranslationHistory = lazy(() => import('./pages/TranslationHistory'));
 const Alerts = lazy(() => import('./pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('./pages/UiElements/Buttons'));
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
@@ -38,6 +40,22 @@ function App() {
             element={
               <Suspense fallback={<Loader />}>
                 <Calendar />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/signdictionary"
+            element={
+              <Suspense fallback={<Loader />}>
+                <SignDictionary />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/translationhistory"
+            element={
+              <Suspense fallback={<Loader />}>
+                <TranslationHistory />
               </Suspense>
             }
           />
