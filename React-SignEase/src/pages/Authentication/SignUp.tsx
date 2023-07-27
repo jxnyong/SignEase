@@ -13,9 +13,9 @@ const SignUp = () => {
                 <img className="hidden dark:block" src={Logo} alt="Logo" />
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
+              
               <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+              Welcome to SignEase, your inclusive and innovative companion for real-time sign language translation to text, empowering speech and hearing-impaired individuals to communicate effortlessly and bridge the gap with the world around them.
               </p>
 
               <span className="mt-15 inline-block">

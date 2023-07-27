@@ -3,12 +3,15 @@ import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { UserContext } from '../../components/UserContext';
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+
+  const { setUserLogged } = React.useContext(UserContext);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,7 +26,8 @@ const SignIn = () => {
       if (response.data.success) {
         // store the token in the local storage
         localStorage.setItem('token', response.data.access_token);
-        // console.log(localStorage.getItem('token'));
+
+        setUserLogged(true); // update the userLogged state
 
         // redirect user to the home page (or dashboard, etc.)
         navigate('/');
@@ -346,6 +350,12 @@ const SignIn = () => {
                     Don’t have any account?{' '}
                     <Link to="/auth/signup" className="text-primary">
                       Sign Up
+                    </Link>
+                  </p>
+                  <p>
+                    Back to{' '}
+                    <Link to="/" className="text-primary">
+                      Home
                     </Link>
                   </p>
                 </div>
