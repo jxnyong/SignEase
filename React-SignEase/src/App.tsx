@@ -6,7 +6,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
 
-const Calendar = lazy(() => import('./pages/Calendar'));
+const Translate = lazy(() => import('./pages/Translate'));
 const Chart = lazy(() => import('./pages/Chart'));
 const FormElements = lazy(() => import('./pages/Form/FormElements'));
 const FormLayout = lazy(() => import('./pages/Form/FormLayout'));
@@ -36,10 +36,10 @@ function App() {
         <Route element={<DefaultLayout />}>
           <Route index element={<ECommerce />} />
           <Route
-            path="/calendar"
+            path="/translate"
             element={
               <Suspense fallback={<Loader />}>
-                <Calendar />
+                <Translate />
               </Suspense>
             }
           />

@@ -25,7 +25,7 @@ const SignDictionary = () => {
 
   const categoryOptions = selectedType === 'Alphabets' ?
     Array.from({ length: 26 }, (_, i) => String.fromCharCode(i + 65)).map(letter => ({ value: letter, label: letter }))
-    : [{ value: 'commonPhrases', label: 'Common Phrases' }, { value: 'food', label: 'Food' }]; // Replace this with your actual data
+    : [{ value: 'please', label: 'Please' }, { value: 'review', label: 'Review' }, { value: 'bug', label: 'Bug' }, { value: 'and', label: 'And' }, { value: 'change', label: 'Change' }, { value: 'code', label: 'Code' }, { value: 'integrate', label: 'Integrate' }, { value: 'commit', label: 'Commit' }, { value: 'fix', label: 'Fix' }, { value: 'pull', label: 'Pull' }, { value: 'request', label: 'Request' }, { value: 'Test', label: 'Test' }]; 
 
   return (
     <>
@@ -69,7 +69,6 @@ const SignDictionary = () => {
         </form>
         
         {selectedType === 'Alphabets' && selectedAlphabet &&
-          // <img src={images[selectedAlphabet]} alt={selectedAlphabet} />
           <div className="flex justify-center items-center mt-18">  {/* Added margin top (mt-4) here */}
             <img className="w-1/2 h-auto" src={images[selectedAlphabet]} alt={selectedAlphabet} />
           </div>
