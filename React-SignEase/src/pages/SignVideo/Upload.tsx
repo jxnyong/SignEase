@@ -91,12 +91,16 @@ const Upload = () => {
                       <span className="text-primary">Click to upload</span> or
                       drag and drop
                     </p>
-                    <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
-                    <p>(max, 800 X 800px)</p>
+                    <p className="mt-1.5">SVG, PNG, GIF, MP4, etc</p>
+                    <p>(max, 14 MB)</p>
                   </div>
                 </div>
 
-                <div className="flex justify-end gap-4.5">
+                <p className="flex justify-start gap-4.5 text-sm text-black dark:text-white">
+                  * Note: By uploading data, you confirm it is free of copyright restrictions. *
+                </p>
+
+                <div className="flex justify-end gap-4.5 mt-3">
                   <button
                     className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                     type="submit"
