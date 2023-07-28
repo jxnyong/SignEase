@@ -23,6 +23,7 @@ def signin():
 
     return jsonify({"success": True, "access_token": access_token}), 200
 
+#Route for handling user logout
 @app.route('/logout', methods=['POST'])
 def logout():
     resp = jsonify({'logout': True})

@@ -1,5 +1,5 @@
 from app import app
-from routes import auth
+from routes import auth, translation
 
 # Route for the root endpoint
 @app.route('/')
