@@ -15,8 +15,8 @@ const Settings = lazy(() => import('./pages/Settings'));
 const Tables = lazy(() => import('./pages/Tables'));
 const SignDictionary = lazy(() => import('./pages/SignDictionary'));
 const TranslationHistory = lazy(() => import('./pages/TranslationHistory'));
-const Alerts = lazy(() => import('./pages/UiElements/Alerts'));
-const Buttons = lazy(() => import('./pages/UiElements/Buttons'));
+const Upload = lazy(() => import('./pages/SignVideo/Upload'));
+const Record = lazy(() => import('./pages/SignVideo/Record'));
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
@@ -108,18 +108,18 @@ function App() {
             }
           />
           <Route
-            path="/ui/alerts"
+            path="/signvideo/upload"
             element={
               <Suspense fallback={<Loader />}>
-                <Alerts />
+                <Upload />
               </Suspense>
             }
           />
           <Route
-            path="/ui/buttons"
+            path="/signvideo/record"
             element={
               <Suspense fallback={<Loader />}>
-                <Buttons />
+                <Record />
               </Suspense>
             }
           />
