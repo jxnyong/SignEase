@@ -6,11 +6,11 @@ You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along 
 
 - Use terminal and navigate to the react project (SignEase\React-SignEase).
 
-- Then run : <code>npm install</code>
-  - npm install
-  - npm install react-hook-form
-  - npm install react-select
-  - npm install axios
+- Then run the following codes below: 
+  - <code>npm install</code>
+  - <code>npm install react-hook-form</code>
+  - <code>npm install react-select</code>
+  - <code>npm install axios</code>
 
 - Then run : <code>npm run dev</code>
 
