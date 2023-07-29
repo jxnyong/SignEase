@@ -1,13 +1,65 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import axios from 'axios';
 import Breadcrumb from '../../components/Breadcrumb';
 import userThree from '../../images/user/user-03.png';
 
 const Upload = () => {
-  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState('');
+  const [fileUploaded, setFileUploaded] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [fileType, setFileType] = useState('image');
+  const [fileDescription, setFileDescription] = useState('');
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(event.target.files ? event.target.files[0] : null);
-  }
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      setFile(file);
+      setFileName(file.name);
+    }
+  };
+
+  const handleUpload = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!file) return; 
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('fullName', fullName);
+    formData.append('fileType', fileType);    
+    formData.append('fileDescription', fileDescription)
+
+    try {
+      const response = await axios.post('http://localhost:5000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response.data);
+      setFileName(''); // reset fileName after successful upload
+      setFile(null); // reset file after successful upload
+      setFileUploaded(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = () => {
+    setFile(null);
+    setFileName('');
+    setFileUploaded(false);;
+  };
+
+  const handleCancel = () => {
+    setFile(null);
+    setFileName('');
+    setFileUploaded(false);
+    setFullName('');
+    setFileType('');
+    setFileDescription('');
+  };
 
   return (
     <>
@@ -16,7 +68,7 @@ const Upload = () => {
 
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="p-7">
-            <form action="#">
+            <form action="#" onSubmit={handleUpload}>
               <div className="mb-4 flex items-center gap-3">
                 <div className="h-14 w-14 rounded-full">
                   <img src={userThree} alt="User" />
@@ -26,7 +78,7 @@ const Upload = () => {
                     Choose your files
                   </span>
                   <span className="flex gap-2.5">
-                    <button className="text-sm hover:text-primary">
+                    <button className="text-sm hover:text-primary" onClick={handleDelete}>
                       Delete
                     </button>
                   </span>
@@ -68,10 +120,12 @@ const Upload = () => {
                       </svg>
                     </span>
                     <input
-                      className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 pl-11.5 pr-4.5 font-medium text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       type="text"
                       name="fullName"
                       id="fullName"
+                      value={fullName}
+                      onChange={e => setFullName(e.target.value)}
                       placeholder="Enter your name"
                     />
                   </div>
@@ -114,7 +168,11 @@ const Upload = () => {
                         </g>
                       </svg>
                     </span>
-                    <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
+                    <select
+                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+                      value={fileType}
+                      onChange={e => setFileType(e.target.value)}
+                    >
                       <option value="image">Image</option>
                       <option value="video">Video</option>
                     </select>
@@ -141,19 +199,28 @@ const Upload = () => {
               </div>
 
               <div>
-                <label className="mb-3 mt-10 block text-black dark:text-white">
+                <label className="mb-3 mt-10 block text-black dark:text-white" htmlFor="fileDescription">
                   File Description
                 </label>
                 <input
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:text-white dark:bg-form-input dark:focus:border-primary"
                   type="text"
+                  name="fileDescription"
+                  id="fileDescription"
+                  value={fileDescription}
+                  onChange={e => setFileDescription(e.target.value)}
                   placeholder="What alphabets/words is the file about?"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
               </div>
 
               <div>
                 <label className="mb-3 mt-10 block text-black dark:text-white">
                   File Upload:
+                  <span className='text-black dark:text-white'>
+                    {/* Display fileName */}
+                    {fileName ? <span> {fileName}</span> : <span> No file selected</span>}
+                    {fileUploaded ? <p>File has been uploaded successfully!</p> : null}
+                  </span>
                 </label>
                 <div
                   id="FileUpload"
@@ -163,6 +230,7 @@ const Upload = () => {
                     type="file"
                     accept="image/*"
                     className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
+                    onChange={handleFileChange}
                   />
                   <div className="flex flex-col items-center justify-center space-y-3">
                     <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -210,12 +278,14 @@ const Upload = () => {
                   <button
                     className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                     type="submit"
+                    onClick={handleCancel}
                   >
                     Cancel
                   </button>
                   <button
                     className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70"
                     type="submit"
+                    onClick={handleUpload}
                   >
                     Upload
                   </button>
@@ -223,8 +293,8 @@ const Upload = () => {
               </div>
             </form>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 };

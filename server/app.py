@@ -14,3 +14,4 @@ database = client["SignEase"]
 # JWT setup
 app.config["JWT_SECRET_KEY"] = "bb123"
 jwt = JWTManager(app)
+

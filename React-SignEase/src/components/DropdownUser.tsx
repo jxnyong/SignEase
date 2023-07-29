@@ -62,9 +62,16 @@ const DropdownUser = () => {
         to="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            Bob Smith
-          </span>
+          {!userLogged && (
+            <span className="block text-sm font-medium text-black dark:text-white">
+              Not Logged
+            </span>
+          )}
+          {userLogged && (
+            <span className="block text-sm font-medium text-black dark:text-white">
+              Bob Smith
+            </span>
+          )}
           <span className="block text-xs">Welcome !</span>
         </span>
 
@@ -181,7 +188,7 @@ const DropdownUser = () => {
                   My Profile
                 </Link>
               </li>
-              
+
               <li>
                 <Link
                   to="/settings"
