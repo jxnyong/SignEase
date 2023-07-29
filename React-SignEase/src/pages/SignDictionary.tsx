@@ -42,7 +42,7 @@ const SignDictionary = () => {
                 render={({ field }) => (
                   <Select
                     {...field}
-                    className="w-full"
+                    className="w-full text-black"
                     options={[{ value: 'Alphabets', label: 'Alphabets' }, { value: 'Words', label: 'Words' }]}
                     onChange={(option) => { setSelectedType(option.value); field.onChange(option); }}
                   />
@@ -58,7 +58,7 @@ const SignDictionary = () => {
                 render={({ field }) => (
                   <Select
                     {...field}
-                    className="w-full"
+                    className="w-full text-black"
                     options={categoryOptions}
                     onChange={(option) => { setSelectedAlphabet(option.value); field.onChange(option); }}
                   />
