@@ -26,6 +26,7 @@ const Upload = () => {
 
     const formData = new FormData();
     formData.append('file', file);
+    formData.append("upload_preset", "ghzgd6ey")
     formData.append('fullName', fullName);
     formData.append('fileType', fileType);    
     formData.append('fileDescription', fileDescription)
@@ -215,10 +216,10 @@ const Upload = () => {
 
               <div>
                 <label className="mb-3 mt-10 block text-black dark:text-white">
-                  File Upload:
-                  <span className='text-black dark:text-white'>
+                  File Upload: 
+                  <span className='text-black text-sm italic dark:text-white '>
                     {/* Display fileName */}
-                    {fileName ? <span> {fileName}</span> : <span> No file selected</span>}
+                    {fileName ? <span> {fileName}</span> : <span>  <span className="text-meta-1">*</span> No file selected</span>}
                     {fileUploaded ? <p>File has been uploaded successfully!</p> : null}
                   </span>
                 </label>

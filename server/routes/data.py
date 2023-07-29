@@ -2,6 +2,15 @@ from flask import request, jsonify
 from werkzeug.datastructures import FileStorage
 from app import app, database
 from bson.objectid import ObjectId
+import cloudinary
+import cloudinary.uploader
+
+cloudinary.config(
+    cloud_name="dlvjtm893",  # Replace with your Cloudinary cloud name
+    api_key="841663142691876",        # Replace with your Cloudinary API key
+    api_secret="UQ4RPBt1jjxrSe9HVJ6oyLsOa2k"   # Replace with your Cloudinary API secret
+)
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -22,6 +31,10 @@ def upload_file():
         full_name = request.form.get('fullName', '')
         file_type = request.form.get('fileType', '')
         file_description = request.form.get('fileDescription', '')
+        upload_preset = request.form.get('upload_preset', 'default_unsigned_preset')
+
+        # Upload the file to Cloudinary and obtain the upload result
+        upload_result = cloudinary.uploader.upload(file_data, upload_preset=upload_preset, folder="signease")
 
         # Save the file directly to the database
         file_doc = {
@@ -31,6 +44,10 @@ def upload_file():
             "file_description": file_description,
             "full_name": full_name,
             "data": file_data,
+            # URL of the uploaded file on Cloudinary
+            "url": upload_result['secure_url'],
+            # Cloudinary public ID of the file
+            "cloudinary_public_id": upload_result['public_id']
         }
 
         database.dataset.insert_one(file_doc)
