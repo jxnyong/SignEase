@@ -229,7 +229,7 @@ const Upload = () => {
                 >
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/*, video/*"
                     className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
                     onChange={handleFileChange}
                   />

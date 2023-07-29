@@ -27,15 +27,17 @@ def upload_file():
         return jsonify({"msg": "No selected file"}), 400
 
     try:
-        file_data = file.read()  # Read the file contents as bytes
         full_name = request.form.get('fullName', '')
         file_type = request.form.get('fileType', '')
         file_description = request.form.get('fileDescription', '')
-        upload_preset = request.form.get('upload_preset', 'default_unsigned_preset')
+        upload_preset = request.form.get('upload_preset', '')
 
         # Upload the file to Cloudinary and obtain the upload result
-        upload_result = cloudinary.uploader.upload(file_data, upload_preset=upload_preset, folder="signease")
-
+        upload_result = cloudinary.uploader.upload(
+            file,
+            upload_preset=upload_preset,
+            folder="signease",
+            resource_type="auto",)
         # Save the file directly to the database
         file_doc = {
             "filename": file.filename,
@@ -43,7 +45,6 @@ def upload_file():
             "content_type": file.content_type,
             "file_description": file_description,
             "full_name": full_name,
-            "data": file_data,
             # URL of the uploaded file on Cloudinary
             "url": upload_result['secure_url'],
             # Cloudinary public ID of the file
@@ -55,4 +56,5 @@ def upload_file():
         return jsonify({"success": True}), 200
 
     except Exception as e:
-        return jsonify({"msg": "Internal Server Error"}), 500
+        app.logger.error(f'Error occurred: {str(e)}')  # This logs the error
+        return jsonify({"msg": "Internal Server Error: " + str(e)}), 500
