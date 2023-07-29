@@ -6,9 +6,9 @@ import cloudinary
 import cloudinary.uploader
 
 cloudinary.config(
-    cloud_name="dlvjtm893",  # Replace with your Cloudinary cloud name
-    api_key="841663142691876",        # Replace with your Cloudinary API key
-    api_secret="UQ4RPBt1jjxrSe9HVJ6oyLsOa2k"   # Replace with your Cloudinary API secret
+    cloud_name="dlvjtm893",  # Cloudinary cloud name
+    api_key="841663142691876",        # Cloudinary API key
+    api_secret="UQ4RPBt1jjxrSe9HVJ6oyLsOa2k"   # Cloudinary API secret
 )
 
 
