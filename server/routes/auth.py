@@ -25,18 +25,7 @@ def signin():
     # create a new token
     access_token = create_access_token(identity=username)
 
-    return (
-        jsonify(
-            {
-                "success": True,
-                "access_token": access_token,
-                "username": username,
-                "fullName": fullName,
-                "email": email,
-            }
-        ),
-        200,
-    )
+    return (jsonify({"success": True, "access_token": access_token, "username": username, "fullName": fullName, "email": email}), 200,)
 
 
 # Route for handling user sign-up
@@ -53,9 +42,7 @@ def signup():
         return jsonify({"msg": "Missing required fields"}), 400
 
     # Check if the username or email already exists in the database
-    existing_user = database.users.find_one(
-        {"$or": [{"username": username}, {"email": email}]}
-    )
+    existing_user = database.users.find_one({"$or": [{"username": username}, {"email": email}]})
 
     if existing_user:
         return jsonify({"msg": "Username or email already exists"}), 409

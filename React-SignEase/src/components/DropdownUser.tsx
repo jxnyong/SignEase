@@ -10,7 +10,7 @@ const DropdownUser = () => {
   const navigate = useNavigate();
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
-  const username = localStorage.getItem('fullName') || "Guest";
+  const fullName = localStorage.getItem('fullName') || "Guest";
 
   const { setUserLogged, userLogged } = useContext(UserContext);
 
@@ -73,7 +73,7 @@ const DropdownUser = () => {
           )}
           {userLogged && (
             <span className="block text-sm font-medium text-black dark:text-white">
-              {username}
+              {fullName}
             </span>
           )}
           {!userLogged && (
