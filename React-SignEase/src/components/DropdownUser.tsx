@@ -10,6 +10,7 @@ const DropdownUser = () => {
   const navigate = useNavigate();
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+  const username = localStorage.getItem('fullName') || "Guest";
 
   const { setUserLogged, userLogged } = useContext(UserContext);
 
@@ -45,6 +46,9 @@ const DropdownUser = () => {
       .then(response => {
         if (response.data.logout === true) {
           localStorage.removeItem('token');
+          localStorage.removeItem('username');
+          localStorage.removeItem('fullName');
+          localStorage.removeItem('email');
           setUserLogged(false); // Update userLogged state to false
           navigate('/auth/signin');
         }
@@ -64,15 +68,20 @@ const DropdownUser = () => {
         <span className="hidden text-right lg:block">
           {!userLogged && (
             <span className="block text-sm font-medium text-black dark:text-white">
-              Not Logged
+              Guest
             </span>
           )}
           {userLogged && (
             <span className="block text-sm font-medium text-black dark:text-white">
-              Bob Smith
+              {username}
             </span>
           )}
-          <span className="block text-xs">Welcome !</span>
+          {!userLogged && (
+            <span className="block text-xs">Not Logged</span>
+          )}
+          {userLogged && (
+            <span className="block text-xs">Welcome !</span>
+          )}
         </span>
 
         <span className="h-12 w-12 rounded-full">

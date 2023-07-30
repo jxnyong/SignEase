@@ -26,7 +26,9 @@ const SignIn = () => {
       if (response.data.success) {
         // store the token in the local storage
         localStorage.setItem('token', response.data.access_token);
-
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('fullName', response.data.fullName);
+        localStorage.setItem('email', response.data.email);
         setUserLogged(true); // update the userLogged state
 
         // redirect user to the home page (or dashboard, etc.)
@@ -50,7 +52,7 @@ const SignIn = () => {
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
               <p className="2xl:px-5 mb-60">
-              Welcome to SignEase, your inclusive and innovative companion for real-time sign language translation to text, empowering speech and hearing-impaired individuals to communicate effortlessly and bridge the gap with the world around them.
+                Welcome to SignEase, your inclusive and innovative companion for real-time sign language translation to text, empowering speech and hearing-impaired individuals to communicate effortlessly and bridge the gap with the world around them.
               </p>
             </div>
           </div>
