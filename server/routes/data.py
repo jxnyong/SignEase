@@ -28,7 +28,7 @@ def upload_file():
 
     try:
         full_name = request.form.get('fullName', '')
-        file_type = request.form.get('fileType', '')
+        sign_type = request.form.get('signType', '')
         file_description = request.form.get('fileDescription', '')
         upload_preset = request.form.get('upload_preset', '')
 
@@ -41,7 +41,7 @@ def upload_file():
         # Save the file directly to the database
         file_doc = {
             "filename": file.filename,
-            "file_type": file_type,
+            "sign_type": sign_type,
             "content_type": file.content_type,
             "file_description": file_description,
             "full_name": full_name,

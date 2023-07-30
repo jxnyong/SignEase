@@ -8,7 +8,7 @@ const Upload = () => {
   const [fileName, setFileName] = useState('');
   const [fileUploaded, setFileUploaded] = useState(false);
   const [fullName, setFullName] = useState('');
-  const [fileType, setFileType] = useState('image');
+  const [signType, setSignType] = useState('asl');
   const [fileDescription, setFileDescription] = useState('');
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +22,13 @@ const Upload = () => {
   const handleUpload = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!file) return; 
+    if (!file) return;
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append("upload_preset", "ghzgd6ey")
     formData.append('fullName', fullName);
-    formData.append('fileType', fileType);    
+    formData.append('signType', signType);
     formData.append('fileDescription', fileDescription)
 
     try {
@@ -58,7 +58,7 @@ const Upload = () => {
     setFileName('');
     setFileUploaded(false);
     setFullName('');
-    setFileType('');
+    setSignType('');
     setFileDescription('');
   };
 
@@ -136,7 +136,7 @@ const Upload = () => {
                   <label
                     className="mb-3 block text-sm font-medium text-black dark:text-white"
                   >
-                    File Type
+                    Type of Sign Language
                   </label>
                   <div className="relative z-20 bg-white dark:bg-form-input">
                     <span className="absolute top-1/2 left-4 z-30 -translate-y-1/2">
@@ -171,11 +171,12 @@ const Upload = () => {
                     </span>
                     <select
                       className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                      value={fileType}
-                      onChange={e => setFileType(e.target.value)}
-                    >
-                      <option value="image">Image</option>
-                      <option value="video">Video</option>
+                      value={signType}
+                      onChange={e => setSignType(e.target.value)}>
+                      <option value="asl">ASL (American Sign Language)</option>
+                      <option value="bsl">BSL (British Sign Language)</option>
+                      <option value="jsl">JSL (Japanese Sign Language)</option>
+                      <option value="csl">CSL (Chinese Sign Language)</option>
                     </select>
                     <span className="absolute top-1/2 right-4 z-10 -translate-y-1/2">
                       <svg
@@ -216,7 +217,7 @@ const Upload = () => {
 
               <div>
                 <label className="mb-3 mt-10 block text-black dark:text-white">
-                  File Upload: 
+                  File Upload:
                   <span className='text-black text-sm italic dark:text-white '>
                     {/* Display fileName */}
                     {fileName ? <span> {fileName}</span> : <span>  <span className="text-meta-1">*</span> No file selected</span>}
