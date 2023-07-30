@@ -1,17 +1,57 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useRef } from 'react';
 import axios from 'axios';
 import Breadcrumb from '../components/Breadcrumb';
+import SwitcherThree from '../components/SwitcherThree';
+import Webcam from 'react-webcam';  // Import react-webcam library
 
 const Translate = () => {
   const [predictedWord, setPredictedSentence] = useState('');
+  const [webcamEnabled, setWebcamEnabled] = useState(false);
+  const webcamRef = useRef<Webcam | null>(null);  // Ref to access the webcam component
+
+  // Function to handle webcam toggle
+  const handleWebcamToggle = () => {
+    setWebcamEnabled(!webcamEnabled);
+  };
+
+  const captureFrame = () => {
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      console.log('Captured frame:', imageSrc);
+    }
+  };
 
   return (
     <>
       <Breadcrumb pageName="Start Translation" />
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <form>
-          <div className="flex flex-col gap-5.5 p-6.5">
+        <div className="flex flex-col gap-5.5 p-6.5">
+          <div className="w-full flex items-center justify-start">
+            <label className="mr-3 text-black dark:text-white">
+              Turn on Webcam:
+            </label>
+            <SwitcherThree />
+          </div>
+          {webcamEnabled && (
+            <div>
+              <Webcam
+                audio={false}
+                height={400}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                width={400}
+              />
+              <button
+                onClick={captureFrame}
+                className="mt-3 bg-primary text-white rounded p-2"
+              >
+                Capture Frame
+              </button>
+            </div>
+          )}
+
+          <form>
             <div>
               <label className="mb-3 block text-black dark:text-white">
                 Sentence Predicted:
@@ -151,6 +191,7 @@ const Translate = () => {
                   <button
                     className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70 "
                     type="submit"
+                    onClick={captureFrame}
                   >
                     Start Predict
                   </button>
@@ -164,8 +205,8 @@ const Translate = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </>
   );

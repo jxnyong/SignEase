@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DefaultUser from '../images/user/default-user.png';
+import userThree from '../images/user/user-03.png';
 import axios from 'axios';
 
 import { UserContext } from '../components/UserContext';
@@ -84,9 +85,16 @@ const DropdownUser = () => {
           )}
         </span>
 
-        <span className="h-12 w-12 rounded-full">
-          <img src={DefaultUser} alt="User" />
-        </span>
+        {!userLogged && (
+          <span className="h-12 w-12 rounded-full">
+            <img src={DefaultUser} alt="User" />
+          </span>
+        )}
+        {userLogged && (
+          <span className="h-12 w-12 rounded-full">
+            <img src={userThree} alt="User" />
+          </span>
+        )}
 
         <svg
           className={`hidden fill-current sm:block ${dropdownOpen ? 'rotate-180' : ''

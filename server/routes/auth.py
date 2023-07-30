@@ -31,7 +31,7 @@ def signin():
 # Route for handling user sign-up
 @app.route("/signup", methods=["POST"])
 def signup():
-    firstName = request.json.get("firstNam", None)
+    firstName = request.json.get("firstName", None)
     lastName = request.json.get("lastName", None)
     full_name = request.json.get("fullName", None)
     username = request.json.get("username", None)
