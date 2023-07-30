@@ -14,14 +14,15 @@ interface Translation {
 
 const TranslationHistory = () => {
   const [translations, setTranslations] = useState<Translation[]>([]);
+  const username = localStorage.getItem('username');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/translations')
+    axios.get('http://localhost:5000/translations', { params: { username } }) // pass the username as a query parameter
       .then(response => {
         console.log(response.data);  // debug output
         setTranslations(JSON.parse(response.data));
       });
-  }, []);
+  }, [username]);
 
   return (
     <>
