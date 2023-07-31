@@ -5,7 +5,7 @@ import SwitcherThree from '../components/SwitcherThree';
 import Webcam from 'react-webcam';
 
 const Translate = () => {
-  const [predictedSentence, setPredictedSentence] = useState('');
+  const [predictedWord, setPredictedWord] = useState('');
   const [webcamOn, setWebcamOn] = useState(false);
 
   const handleToggleWebcam = () => {
@@ -13,13 +13,6 @@ const Translate = () => {
   };
 
   const captureFrame = () => {
-    // Code to capture frame from the webcam and predict the sentence goes here
-    // This is where you will call the API to perform the prediction
-    // Update the 'predictedSentence' state based on the prediction result
-    // For now, let's simulate a predicted sentence "web cam is on" when the webcam is on
-    if (webcamOn) {
-      setPredictedSentence('web cam is on');
-    }
   };
 
   return (
@@ -28,27 +21,48 @@ const Translate = () => {
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-col gap-5.5 p-6.5">
-          <div className="w-full flex items-center justify-start">
-            <label className="mr-3 text-black dark:text-white">
-              Turn on Webcam:
-            </label>
-            <SwitcherThree onChange={handleToggleWebcam} />
-          </div>
-
-          <form>
-            <div>
-              <label className="mb-3 block text-black dark:text-white">
+          <div className="mb-5.5 mt-10 flex flex-col gap-5.5 sm:flex-row">
+            <div className="w-full sm:w-1/2">
+              <div className="flex items-center mb-4">
+                <label className="mr-3 text-black dark:text-white">
+                  Turn on Webcam:
+                </label>
+                <SwitcherThree onChange={handleToggleWebcam} />
+              </div>
+              {webcamOn ?
+                <Webcam />
+                : ""}
+            </div>
+            <div className="w-full sm:w-1/2">
+              <label className="mb-4 mt-1.5 block text-black dark:text-white">
                 Sentence Predicted:
               </label>
               <textarea
-                rows={6}
+                rows={14}
                 placeholder="Translating the sentence.."
                 className="w-full rounded-lg border-[1.5px] text-black border-strokewhite bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:text-white dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                value={webcamOn ? "web cam is on" : predictedSentence}
+                value={predictedWord}
                 readOnly
               ></textarea>
+              <div className="flex gap-5 mt-4">
+                <button
+                  className="inline-flex items-center justify-center rounded-md bg-meta-12 dark:bg-meta-3  py-3 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-7"
+                  type="submit"
+                >
+                  Space
+                </button>
+                <button
+                  className="inline-flex items-center justify-center rounded-md bg-meta-11 dark:bg-meta-10 py-3 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-8"
+                  type="submit"
+                >
+                  Delete Word
+                </button>
+              </div>
             </div>
-            <div className="mb-5.5 mt-10 flex flex-col gap-5.5 sm:flex-row">
+          </div>
+
+          <form>
+            <div className="mb-5.5 mt-2 flex flex-col gap-5.5 sm:flex-row">
               <div className="w-full sm:w-1/4">
                 <label className="mb-3 block text-black dark:text-white">
                   Select Language
@@ -173,7 +187,7 @@ const Translate = () => {
               <div className="w-full sm:w-1/2 flex items-center justify-end">
                 <div className="flex gap-5 mt-8.5">
                   <button
-                    className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70 "
+                    className="inline-flex items-center justify-center rounded bg-meta-13 dark:bg-primary py-3 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-7"
                     type="submit"
                     onClick={captureFrame}
                   >
@@ -181,10 +195,10 @@ const Translate = () => {
                   </button>
 
                   <button
-                    className="rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                    className="inline-flex items-center justify-center rounded bg-meta-12 dark:bg-meta-3 py-3 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-7"
                     type="submit"
                   >
-                    Stop
+                    Upload to History
                   </button>
                 </div>
               </div>
