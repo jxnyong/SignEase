@@ -11,6 +11,7 @@ You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along 
   - <code>npm install react-hook-form</code>
   - <code>npm install react-select</code>
   - <code>npm install axios</code>
+  - <code>npm install react-webcam</code>
 
 - Then run : <code>npm run dev</code>
 
