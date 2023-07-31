@@ -4,6 +4,11 @@ import Breadcrumb from '../../components/Breadcrumb';
 import SwitcherThree from '../../components/SwitcherThree';
 
 const Record = () => {
+  const [webcamOn, setWebcamOn] = useState(false);
+
+  const handleToggleWebcam = () => {
+    setWebcamOn(!webcamOn);
+  };
   return (
     <>
       <Breadcrumb pageName="Start Translation" />
@@ -13,11 +18,11 @@ const Record = () => {
           <label className="mr-3 text-black dark:text-white">
             Turn on Webcam:
           </label>
-          <SwitcherThree />
+          <SwitcherThree onChange={handleToggleWebcam} />
         </div>
 
         <div className="flex flex-col gap-5.5 p-6.5">
-          display webcam here
+          {webcamOn ? "web cam is on" : "web cam is off"}
         </div>
 
         <form>
@@ -155,7 +160,7 @@ const Record = () => {
                   </button>
 
                   <button
-                    className="rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                    className="rounded border border-strokewhite py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                     type="submit"
                   >
                     Submit Recording

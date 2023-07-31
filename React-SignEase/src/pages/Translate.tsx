@@ -2,22 +2,23 @@ import React, { ChangeEvent, useState, useRef } from 'react';
 import axios from 'axios';
 import Breadcrumb from '../components/Breadcrumb';
 import SwitcherThree from '../components/SwitcherThree';
-import Webcam from 'react-webcam';  // Import react-webcam library
+import Webcam from 'react-webcam';
 
 const Translate = () => {
-  const [predictedWord, setPredictedSentence] = useState('');
-  const [webcamEnabled, setWebcamEnabled] = useState(false);
-  const webcamRef = useRef<Webcam | null>(null);  // Ref to access the webcam component
+  const [predictedSentence, setPredictedSentence] = useState('');
+  const [webcamOn, setWebcamOn] = useState(false);
 
-  // Function to handle webcam toggle
-  const handleWebcamToggle = () => {
-    setWebcamEnabled(!webcamEnabled);
+  const handleToggleWebcam = () => {
+    setWebcamOn(!webcamOn);
   };
 
   const captureFrame = () => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
-      console.log('Captured frame:', imageSrc);
+    // Code to capture frame from the webcam and predict the sentence goes here
+    // This is where you will call the API to perform the prediction
+    // Update the 'predictedSentence' state based on the prediction result
+    // For now, let's simulate a predicted sentence "web cam is on" when the webcam is on
+    if (webcamOn) {
+      setPredictedSentence('web cam is on');
     }
   };
 
@@ -31,25 +32,8 @@ const Translate = () => {
             <label className="mr-3 text-black dark:text-white">
               Turn on Webcam:
             </label>
-            <SwitcherThree />
+            <SwitcherThree onChange={handleToggleWebcam} />
           </div>
-          {webcamEnabled && (
-            <div>
-              <Webcam
-                audio={false}
-                height={400}
-                ref={webcamRef}
-                screenshotFormat="image/jpeg"
-                width={400}
-              />
-              <button
-                onClick={captureFrame}
-                className="mt-3 bg-primary text-white rounded p-2"
-              >
-                Capture Frame
-              </button>
-            </div>
-          )}
 
           <form>
             <div>
@@ -59,8 +43,8 @@ const Translate = () => {
               <textarea
                 rows={6}
                 placeholder="Translating the sentence.."
-                className="w-full rounded-lg border-[1.5px] text-black border-strokewhite bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                value={predictedWord}
+                className="w-full rounded-lg border-[1.5px] text-black border-strokewhite bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:text-white dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                value={webcamOn ? "web cam is on" : predictedSentence}
                 readOnly
               ></textarea>
             </div>

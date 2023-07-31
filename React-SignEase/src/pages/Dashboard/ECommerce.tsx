@@ -1,33 +1,53 @@
-import CardFour from '../../components/CardFour.tsx';
-import CardOne from '../../components/CardOne.tsx';
-import CardThree from '../../components/CardThree.tsx';
-import CardTwo from '../../components/CardTwo.tsx';
-import ChartOne from '../../components/ChartOne.tsx';
-import ChartThree from '../../components/ChartThree.tsx';
-import ChartTwo from '../../components/ChartTwo.tsx';
-import ChatCard from '../../components/ChatCard.tsx';
-import MapOne from '../../components/MapOne.tsx';
-import TableOne from '../../components/TableOne.tsx';
+import React, { ChangeEvent, useState, useRef } from 'react';
+import axios from 'axios';
+import Breadcrumb from '../../components/Breadcrumb';
+import SwitcherThree from '../../components/SwitcherThree';
 
 const ECommerce = () => {
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardOne />
-        <CardTwo />
-        <CardThree />
-        <CardFour />
-      </div>
+      <Breadcrumb pageName="Subscription" />
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
-        <ChartThree />
-        <MapOne />
-        <div className="col-span-12 xl:col-span-8">
-          <TableOne />
+      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-col gap-5.5 p-6.5">
+          <div className="mb-5.5 mt-10 flex flex-col gap-5.5 sm:flex-row">
+            <div className="w-full sm:w-1/3">
+              <label className="mb-3 block text-black dark:text-white">
+                Free
+              </label>
+              <textarea
+                rows={6}
+                placeholder="- Only access to gesture recognition"
+                className="w-full rounded-lg border-[1.5px] text-black border-strokewhite bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                readOnly
+              ></textarea>
+            </div>
+
+            <div className="w-full sm:w-1/3">
+              <label className="mb-3 block text-black dark:text-white">
+                Premium
+              </label>
+              <textarea
+                rows={6}
+                placeholder="- Access to both gesture and action recogition"
+                className="w-full rounded-lg border-[1.5px] text-black border-strokewhite bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                readOnly
+              ></textarea>
+            </div>
+
+            <div className="w-full sm:w-1/3">
+              <label className="mb-3 block text-black dark:text-white">
+                Level 2 Subscription
+              </label>
+              <textarea
+                rows={6}
+                placeholder="- Access to all functionality"
+                className="w-full rounded-lg border-[1.5px] text-black border-strokewhite bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                readOnly
+              ></textarea>
+            </div>
+          </div>
         </div>
-        <ChatCard />
       </div>
     </>
   );

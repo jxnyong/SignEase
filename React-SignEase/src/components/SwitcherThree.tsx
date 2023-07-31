@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-const SwitcherThree = () => {
+interface SwitcherThreeProps {
+  onChange: () => void; // Add the onChange prop
+}
+
+const SwitcherThree: React.FC<SwitcherThreeProps> = ({ onChange }) => {
   const [enabled, setEnabled] = useState(false);
 
   return (
@@ -16,6 +20,7 @@ const SwitcherThree = () => {
             className="sr-only"
             onChange={() => {
               setEnabled(!enabled);
+              onChange();
             }}
           />
           <div className="block h-8 w-14 bg-strokewhite rounded-full dark:bg-[#5A616B]"></div>

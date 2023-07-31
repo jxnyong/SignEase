@@ -189,7 +189,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                       (isActive && '!text-white')
                                     }
                                   >
-                                    eCommerce
+                                    Subscription
                                   </NavLink>
                                 </li>
                               </ul>
@@ -532,7 +532,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                       (isActive && '!text-white')
                                     }
                                   >
-                                    eCommerce
+                                    Subscription
                                   </NavLink>
                                 </li>
                               </ul>
@@ -863,7 +863,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </clipPath>
                           </defs>
                         </svg>
-                        Tables
+                        About Us
                       </NavLink>
                     </li>
                     {/* <!-- Menu Item Tables --> */}
