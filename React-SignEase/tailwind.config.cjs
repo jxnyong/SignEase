@@ -1,4 +1,4 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -46,6 +46,13 @@ module.exports = {
       'meta-11': '#e37168',
       'meta-12': '#85ed8d',
       'meta-13': '#99bdf7',
+      'meta-14': '#00BCD4',
+      'meta-14': '#00C8C8',
+      'meta-15': '#04818a',
+      'meta-16': '#b2ebf2',
+      'meta-17': '#333A48',
+      'meta-18': '#9FA8DA',
+      'meta-19': '#E0F7FA',
       success: '#219653',
       danger: '#D34053',
       warning: '#FFA70B',
@@ -221,6 +228,9 @@ module.exports = {
         6: '6px',
       },
       boxShadow: {
+        // Default Tailwind's shadow-lg
+        lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'plan-box': '0 0 10px rgba(0, 0, 0, 0.2)',
         default: '0px 8px 13px -3px rgba(0, 0, 0, 0.07)',
         card: '0px 1px 3px rgba(0, 0, 0, 0.12)',
         'card-2': '0px 1px 2px rgba(0, 0, 0, 0.05)',
@@ -256,4 +266,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
