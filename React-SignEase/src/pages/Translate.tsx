@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useRef } from 'react';
+import React, { ChangeEvent, useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import Breadcrumb from '../components/Breadcrumb';
 import SwitcherThree from '../components/SwitcherThree';
@@ -8,12 +8,57 @@ const Translate = () => {
   const [predictedWord, setPredictedWord] = useState('');
   const [webcamOn, setWebcamOn] = useState(false);
 
-  const handleToggleWebcam = () => {
-    setWebcamOn(!webcamOn);
+  const webcamRef = useRef<Webcam>(null);
+  const peerConnection = useRef<RTCPeerConnection | null>(null);
+  const openWebcam = async () => {
+    // Check if the browser supports WebRTC
+    if (!window.RTCPeerConnection) {
+      alert('Your browser does not support WebRTC');
+      return;
+    }
+
+    // Create the peer connection
+    peerConnection.current = new window.RTCPeerConnection({});
+
+    // Handle ice connection state changes
+    peerConnection.current.oniceconnectionstatechange = () => {
+      console.log(`ICE connection state change: ${peerConnection.current.iceConnectionState}`);
+      if (peerConnection.current.iceConnectionState === 'connected' ||
+        peerConnection.current.iceConnectionState === 'completed') {
+        console.log('WebRTC connection established and stable');
+      }
+    };
+
+    // TODO: Update the logic to get the stream from the webcam
+    const webcamStream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+    webcamStream.getTracks().forEach(track => {
+      peerConnection.current?.addTrack(track, webcamStream);
+    });
+
+    // Create an offer and set it as the local description
+    if (peerConnection.current) {
+      const offer = await peerConnection.current.createOffer();
+      await peerConnection.current.setLocalDescription(offer);
+      const response = await axios.post('http://127.0.0.1:5000/predict', { offer: peerConnection.current.localDescription });
+      console.log(response.data);
+      await peerConnection.current.setRemoteDescription(new RTCSessionDescription(response.data));
+    }
   };
 
-  const captureFrame = () => {
+  const handleToggleWebcam = () => {
+    setWebcamOn(!webcamOn);
+    if (!webcamOn) {
+      openWebcam();
+    }
   };
+
+  useEffect(() => {
+    if (webcamOn) {
+      openWebcam();
+    }
+  }, [webcamOn]);
+
 
   return (
     <>
@@ -189,7 +234,7 @@ const Translate = () => {
                   <button
                     className="inline-flex items-center justify-center rounded bg-meta-13 dark:bg-primary py-3 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-7"
                     type="submit"
-                    onClick={captureFrame}
+                    onClick={openWebcam}
                   >
                     Start Predict
                   </button>

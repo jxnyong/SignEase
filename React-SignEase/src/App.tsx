@@ -1,10 +1,10 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import ECommerce from './pages/Dashboard/ECommerce';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
+import Subscription from './pages/Dashboard/Subscription';
 
 const Translate = lazy(() => import('./pages/Translate'));
 const Chart = lazy(() => import('./pages/Chart'));
@@ -34,7 +34,7 @@ function App() {
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route element={<DefaultLayout />}>
-          <Route index element={<ECommerce />} />
+          <Route index element={<Subscription />} />
           <Route
             path="/translate"
             element={
