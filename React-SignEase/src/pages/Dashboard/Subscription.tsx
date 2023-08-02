@@ -15,8 +15,6 @@ const Subscription = () => {
           <div className='bg-meta-19 flex-1 dark:bg-boxdark-2'></div>
         </div>
 
-
-
         <div className="mx-auto grid max-w-7xl gap-12 py-24 px-4 sm:px-6 lg:grid-cols-3 lg:gap-8 lg:px-8">
           <div className="relative flex flex-col rounded-2xl border-slate-200 bg-white p-8 shadow-plan-box shadow-lg flex-col plan-box hover:shadow-lg">
 
