@@ -5,6 +5,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
 import Subscription from './pages/Dashboard/Subscription';
+import RequestLang from './pages/RequestLang';
 
 const Translate = lazy(() => import('./pages/Translate'));
 const Chart = lazy(() => import('./pages/Chart'));
@@ -56,6 +57,14 @@ function App() {
             element={
               <Suspense fallback={<Loader />}>
                 <TranslationHistory />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/RequestLang"
+            element={
+              <Suspense fallback={<Loader />}>
+                <RequestLang />
               </Suspense>
             }
           />
