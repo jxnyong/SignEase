@@ -6,30 +6,27 @@
 /_______  /|__\___  /|___|  /_______  (____  /____  >\___  >
         \/   /_____/      \/        \/     \/     \/     \/
 ```
-- [📚About](#SignEase)
+- [📚About](#signease)
+  - [Features](#features)
+  - [Goals](#goals)
 - [🔗Dependencies](#dependencies)
-  - [Package Installations](#Package-Installations)
-    - [`npm` installs](#React-Dependencies)
-    - [`npx` installs](#-React-Native-Dependencies)
-    - [Python3 `pip` installs](#Python-Dependencies)
-  - [Cloud Dependencies](#Cloud-Dependencies)
-    - [MongoDB](https://cloud.mongodb.com/)
-    - [Cloundinary](https://cloudinary.com/)
-    - [Ngrok](https://ngrok.com/)
-  - [Other Dependencies](#Others-Dependencies)
-    - [VB-audio Cable](https://vb-audio.com/)
-    - [OBS virtual Camera](https://obsproject.com/forum/resources/obs-virtualcam.539/)
+  - [Package Installations](#package-installations)
+    - [React Dependencies](#react-dependencies)
+    - [React Native Dependencies](#react-native-dependencies)
+    - [Python Dependencies](#python-dependencies)
+  - [Cloud Dependencies](#cloud-dependencies)
+  - [Others Dependencies \& References](#others-dependencies--references)
 - [Contributors](#contributors)
 
 # SignEase
 SignEase is an innovative AI-powered sign language translation application that utilizes advanced Computer Vision and Natural Language Processing (NLP) to support communication between hearing and hearing-impaired team members in an online meeting setting. 
 ## Features
->	A hearing participant speaking in an online meeting will have his speech transcribed and displayed as subtitle over the video to the hearing-impaired.
->	The hearing-impaired can participate in the meeting through hand signs which will be translated into text and speech in the pre-specified language such as English or Mandarin. The text for the hand sign is displayed as subtitle over the video. At the same time other participants will be able to hear audibly the words corresponding to its hand signs.
->	After the meeting ends, users can archive the text of the conversation history.
+>	- A hearing participant speaking in an online meeting will have his speech transcribed and displayed as subtitle over the video to the hearing-impaired.
+>	- The hearing-impaired can participate in the meeting through hand signs which will be translated into text and speech in the pre-specified language such as English or Mandarin. The text for the hand sign is displayed as subtitle over the video. At the same time other participants will be able to hear audibly the words corresponding to its hand signs.
+>	- After the meeting ends, users can archive the text of the conversation history.
 ## Goals
-> Eliminating prejudice and stereotypes towards hearing-impaired individuals.
-> Enhancing social inclusion for hearing-impaired individuals, promoting equality and equal opportunities.
+> - Eliminating prejudice and stereotypes towards hearing-impaired individuals.
+> - Enhancing social inclusion for hearing-impaired individuals, promoting equality and equal opportunities.
 
 # 🔗Dependencies
 ## Package Installations
