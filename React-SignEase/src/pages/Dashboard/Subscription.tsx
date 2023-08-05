@@ -57,7 +57,7 @@ const Subscription = () => {
 
             {/* Call to Action */}
             <a href='#' className='mt-8 block bg-meta-16 px-6 py-4 text-center text-sm font-semibold leading-4 text-meta-15 hover:bg-meta-15 hover:text-white rounded-lg shadow-md'>
-              Start your trial
+              Continue using
             </a>
           </div>
 
@@ -100,11 +100,17 @@ const Subscription = () => {
                 </svg>
                 <span className="ml-3">Translation History</span>
               </li>
+              <li className='flex leading-6 text-slate-700 items-center'>
+                <svg className="h-5 w-5 text-cyan-500 shrink-0 self-start" viewBox="0 0 20 20" fill="#39b1bf" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.70711 10.2929C6.31658 9.90237 5.68342 9.90237 5.29289 10.2929C4.90237 10.6834 4.90237 11.3166 5.29289 11.7071L6.70711 10.2929ZM14.0784 7.74974C14.4925 7.38427 14.5319 6.75234 14.1664 6.33827C13.801 5.9242 13.169 5.8848 12.755 6.25026L14.0784 7.74974ZM8.84768 13.8477L8.14057 14.5548C8.38489 14.7991 8.73803 14.9 9.07455 14.8216C9.41106 14.7432 9.68327 14.4967 9.79447 14.1695L8.84768 13.8477ZM9.79447 14.1695C10.6447 11.6685 12.1378 9.46254 14.0784 7.74974L12.755 6.25026C10.5581 8.18922 8.86547 10.6883 7.90089 13.5258L9.79447 14.1695ZM5.29289 11.7071L8.14057 14.5548L9.55478 13.1406L6.70711 10.2929L5.29289 11.7071Z" />
+                </svg>
+                <span className="ml-3">Mobile Application</span>
+              </li>
             </ul>
 
             {/* Call to Action */}
-            <a href='#' className='mt-8 block bg-meta-14 px-6 py-4 text-center text-sm font-semibold leading-4 text-white hover:bg-meta-15 rounded-lg shadow-md'>
-              Buy Now
+            <a href='https://buy.stripe.com/7sI9DLcc6btE5MsfYY' className='mt-8 block bg-meta-14 px-6 py-4 text-center text-sm font-semibold leading-4 text-white hover:bg-meta-15 rounded-lg shadow-md'>
+              Buy now
             </a>
           </div>
 
@@ -118,7 +124,7 @@ const Subscription = () => {
             {/* Price */}
             <div className='-mx-6 mt-4 rounded-lg bg-slate-50 p-6'>
               <p className='flex items-center text-sm font-semibold text-slate-500 dark:text-black'>
-                <span>SGD</span>
+                <span> from SGD</span>
                 <span className='ml-3 text-4xl text-slate-900'>$15</span>
                 <span className='ml-1.5'>/month</span>
               </p>
@@ -148,13 +154,19 @@ const Subscription = () => {
                 <svg className="h-5 w-5 text-cyan-500 shrink-0 self-start" viewBox="0 0 20 20" fill="#39b1bf" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6.70711 10.2929C6.31658 9.90237 5.68342 9.90237 5.29289 10.2929C4.90237 10.6834 4.90237 11.3166 5.29289 11.7071L6.70711 10.2929ZM14.0784 7.74974C14.4925 7.38427 14.5319 6.75234 14.1664 6.33827C13.801 5.9242 13.169 5.8848 12.755 6.25026L14.0784 7.74974ZM8.84768 13.8477L8.14057 14.5548C8.38489 14.7991 8.73803 14.9 9.07455 14.8216C9.41106 14.7432 9.68327 14.4967 9.79447 14.1695L8.84768 13.8477ZM9.79447 14.1695C10.6447 11.6685 12.1378 9.46254 14.0784 7.74974L12.755 6.25026C10.5581 8.18922 8.86547 10.6883 7.90089 13.5258L9.79447 14.1695ZM5.29289 11.7071L8.14057 14.5548L9.55478 13.1406L6.70711 10.2929L5.29289 11.7071Z" />
                 </svg>
-                <span className="ml-3">Comes with an Additional Driver! <br></br>(Can be embedded into software such as Zoom or MsTeams)</span>
+                <span className="ml-3">Mobile Application</span>
+              </li>
+              <li className='flex leading-6 text-slate-700 items-center'>
+                <svg className="h-5 w-5 text-cyan-500 shrink-0 self-start" viewBox="0 0 20 20" fill="#39b1bf" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.70711 10.2929C6.31658 9.90237 5.68342 9.90237 5.29289 10.2929C4.90237 10.6834 4.90237 11.3166 5.29289 11.7071L6.70711 10.2929ZM14.0784 7.74974C14.4925 7.38427 14.5319 6.75234 14.1664 6.33827C13.801 5.9242 13.169 5.8848 12.755 6.25026L14.0784 7.74974ZM8.84768 13.8477L8.14057 14.5548C8.38489 14.7991 8.73803 14.9 9.07455 14.8216C9.41106 14.7432 9.68327 14.4967 9.79447 14.1695L8.84768 13.8477ZM9.79447 14.1695C10.6447 11.6685 12.1378 9.46254 14.0784 7.74974L12.755 6.25026C10.5581 8.18922 8.86547 10.6883 7.90089 13.5258L9.79447 14.1695ZM5.29289 11.7071L8.14057 14.5548L9.55478 13.1406L6.70711 10.2929L5.29289 11.7071Z" />
+                </svg>
+                <span className="ml-3">Comes with an a desktop application! <br></br>(Can be embedded into software such as Zoom or MsTeams)</span>
               </li>
             </ul>
 
             {/* Call to Action */}
             <a href='#' className='mt-8 block bg-meta-16 px-6 py-4 text-center text-sm font-semibold leading-4 text-meta-15 hover:bg-meta-15 hover:text-white rounded-lg shadow-md'>
-              Buy Now
+              Get a quote
             </a>
           </div>
         </div>

@@ -1,0 +1,25 @@
+{
+    "Options": {
+        "En": [
+            "En",
+            "English"
+        ],
+        "Cn": [
+            "Zh",
+            "Chinese"
+        ],
+        "Jp": [
+            "Ja",
+            "Japanese"
+        ]
+    },
+    "Setting": {
+        "inputLanguage": "En",
+        "outputLanguage": "En"
+    },
+    "Languages": {
+        "Zh": "lang/CN/NotoSansSC-Black.otf",
+        "Ja": "lang/JP/static/NotoSansJP-Black.ttf"
+    },
+    "url-domain": "https://localhost:5173/"
+}

@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "ReactNative-SignEase",
+    "slug": "ReactNative-SignEase",
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow ReactNative-SignEase to access your camera."
+        }
+      ]
+    ]
+  }
+}
