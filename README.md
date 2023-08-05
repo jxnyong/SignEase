@@ -7,7 +7,8 @@
         \/   /_____/      \/        \/     \/     \/     \/
 ```
 [📚About](#SignEase)
-[🔗 Dependencies](#-dependencies)
+[🔗Dependencies](#dependencies)
+  - [Package Installations](#Package-Installations)
     - [npm installs](#React-Dependencies)
     - [npx installs](#-React-Native-Dependencies)
     - [Python3 `pip` installs](#Python-Dependencies)
@@ -20,9 +21,10 @@
 [Contributors](#contributors)
 
 # SignEase
-AI - Sign Language Interpreter Application
+AI - Live Sign Language Interpreter Application
 
-# 🔗 Dependencies
+# 🔗Dependencies
+## Package Installations
 ### React Dependencies
 You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along with it) and TailAdmin uses **Vite** for frontend tooling, to peform installation and building production version, please follow these steps from below:
    <code>npm i typescript</code>
