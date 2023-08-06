@@ -8,6 +8,8 @@ You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along 
 
 - Then run the following codes below: 
   - <code>npm install</code>
+
+- If there are some missing dependencies, run the following codes below: 
   - <code>npm install react-hook-form</code>
   - <code>npm install react-select</code>
   - <code>npm install axios</code>
