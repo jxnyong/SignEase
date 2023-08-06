@@ -32,9 +32,9 @@ SignEase is an innovative AI-powered sign language translation application that 
 ## Package Installations
 ### React Dependencies
 You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along with it) and TailAdmin uses **Vite** for frontend tooling, to peform installation and building production version, please follow these steps from below:
-   <code>npm i typescript</code>
-   <code>npm i axios</code>
-   <code>npm i create-vite</code>
+- Use terminal and navigate to the react project (SignEase\React-SignEase).
+- Under the folder, there is a README file with the installation guide for the react website.
+  
 ### React Native Dependencies
   <code>npx i expo-router</code>
   <code>npm i axios</code>
