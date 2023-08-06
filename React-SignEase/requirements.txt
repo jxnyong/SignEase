@@ -1,4 +1,3 @@
--py
 addict
 aiofiles
 aioice
