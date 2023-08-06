@@ -13,6 +13,8 @@ You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along 
   - <code>npm install axios</code>
   - <code>npm install react-webcam</code>
 
+- Before running, navigate into the server folder (SignEase\server).
+- Next, locate the server.py file and run it.
 - Then run : <code>npm run dev</code>
 
 Now, in the browser go to <code>localhost:5173</code>
