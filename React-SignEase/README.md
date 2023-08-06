@@ -24,4 +24,7 @@ Default build output directory: /dist
 
 This command will generate a dist as build folder in the root of your template that you can upload to your server.
 
+### Python Dependencies
+  <code>pip install -r requirements.txt</code>
+
 
