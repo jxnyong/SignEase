@@ -17,6 +17,8 @@ You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along 
 
 - Before running, navigate into the server folder (SignEase\server).
 - Next, locate the server.py file and run it.
+  - (test) C:\GitHub\SignEase> <code>cd server</code>
+  - (test) C:\GitHub\SignEase\server> <code> c:/VirtualEnv/test/Scripts/python.exe c:/GitHub/SignEase/server/server.py </code>
 - Lastly, navigate back to the react project (SignEase\React-SignEase) and run the following code :
   - <code>npm run dev</code>
 
