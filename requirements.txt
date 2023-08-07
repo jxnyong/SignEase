@@ -71,3 +71,27 @@ urllib3==2.0.3
 wcwidth==0.2.6
 Werkzeug==2.3.6
 WTForms==3.0.1
+pyvirtualcam==0.10.2
+SpeechRecognition==3.10.0
+torch==2.0.1
+whisper==1.1.10
+pyaudio
+playsound
+SpeechRecognition
+translate
+pymongo
+stripe
+--extra-index-url https://download.pytorch.org/whl/cu116
+torch
+git+https://github.com/openai/whisper.git
+pygame==2.5.0
+openai_whisper==20230314
+PySimpleGUI==4.60.5
+pyttsx3==2.90
+keras==2.11.0
+keras_nightly==2.13.0.dev2023050207
+matplotlib==3.5.3
+mediapipe==0.10.0
+numpy==1.23.5
+opencv_contrib_python==4.7.0.72
+opencv_python==4.7.0.72
