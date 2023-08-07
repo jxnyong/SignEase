@@ -24,7 +24,7 @@ with open('langConfig.json', 'r') as f:
 #         outLANG:str = data["Setting"]["outputLanguage"]
 #     return outLANG
 
-def main(users:str=None):
+def main(users:str=None, callback:callable=None):
     cap = cv2.VideoCapture(0)
     recog = HandGestureRecogniser()
     model.__draw__ = (False, False, True)
@@ -44,6 +44,8 @@ def main(users:str=None):
         while True:
             event, values = window.read(timeout=20)
             if event == 'Exit' or event == sg.WIN_CLOSED: 
+                if callback:
+                    callback(users)
                 break
             elif event == 'Record':
                 window['Record'].Update(visible=False)

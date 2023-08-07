@@ -1,5 +1,5 @@
 import cv2, pickle, asyncio
-import mediapipe as mp
+import mediapipe as mp, time, base64
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense,  Dropout
@@ -85,3 +85,28 @@ def draw_landmarks(image, results):
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
             mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+def landmarking(frame):
+    frame, results = mediapipe_detection(frame, hands)
+    draw_landmarks(frame, results)
+    return frame
+
+if __name__ == '__main__':
+    #testing
+    # Initialize webcam
+    cap = cv2.VideoCapture(0)
+    #Set/Accessing mediapipe model
+    while cap.isOpened():
+        start = time.perf_counter()
+        #Read feed from the webcam. frame = image from webcam
+        ret, frame = cap.read()
+        #Make detection
+        image = landmarking(frame)
+        print(f"time elapsed: {time.perf_counter()-start}")
+        # Break the loop on pressing 'q'. 0xFF represents current key
+        if cv2.waitKey(10) & 0xFF == ord('q'):
+            break
+
+    # Release resources/Turning off webcam
+    cap.release()
+    cv2.destroyAllWindows()

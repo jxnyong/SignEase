@@ -71,4 +71,3 @@ def predict(frame) -> str:
         pred = model.predict(keypoints)
         class_label = labels[np.argmax(pred)]
     return class_label
-

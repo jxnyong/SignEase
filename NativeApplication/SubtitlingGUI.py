@@ -111,7 +111,7 @@ def putText(frame, text, *, coordinates:tuple=(100,660), font = cv2.FONT_HERSHEY
     return cv2.cvtColor(np.array(frame_pil), cv2.COLOR_RGB2BGR)
 
 
-def main(user:str=None):
+def main(user:str=None, callback:callable=None):
     speech_recognisor = SpeechRecognition(verbose=True)
     sg.theme('DarkBlack1')
     # define the window layout
@@ -133,8 +133,11 @@ def main(user:str=None):
         while True:
             event, values = window.read(timeout=20)
             if event == 'Exit' or event == sg.WIN_CLOSED:
+                if callback:
+                    callback(user)
                 speech_recognisor.stop_event.set()
                 speechRecogniser_thread.join()
+                
                 return
             elif event == 'Record':
                 speech_recognisor.pause_event.set()

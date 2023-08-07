@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import config from "../url.json";
 import storage from "../storage";
 import axios from "axios";
+import LogoSVG from './logo'
 import { COLORS, FONT, SIZES } from "../../constants";
 // import useFetch from "../../hook/useFetch";
 
@@ -34,6 +35,7 @@ export default function LoginPage() {
         <Text style={styles.title}>Login Page</Text>
       </View>
       <Text></Text>
+      <LogoSVG/>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder=" Username"
@@ -53,7 +55,7 @@ export default function LoginPage() {
       <TouchableOpacity onPress={onPressLogin} style={styles.inputBtn}>
           <Text>Login </Text>
         </TouchableOpacity>
-      <TouchableOpacity style={styles.inputBtn}>
+      <TouchableOpacity style={styles.inputBtn} onPress={()=>{Linking.openURL(`${config.react_web}/signup`)}}>
         <Text>Signup</Text>
       </TouchableOpacity>
       </View>

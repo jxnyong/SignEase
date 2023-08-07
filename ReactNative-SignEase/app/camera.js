@@ -5,7 +5,7 @@ import { hexToRgbA, config, storage } from "../components";
 import axios from "axios";
 
 export default function CameraSign() {
-  const username = 'testing'; 
+  const [username, setUsername] = useState("testing");
   const [type, setType] = useState(Camera.Constants.Type.front);
   const emptyImage =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
@@ -15,7 +15,7 @@ export default function CameraSign() {
 
   let screenshotTimeout;
   const clearSentence = async () => {
-    axios.post(`${config.backendUrl}/clear`, {username});
+    axios.post(`${config.backendUrl}/clear`, {"username": username});
   }
   
   const toggleCameraType = () => {
@@ -30,15 +30,16 @@ export default function CameraSign() {
     try {
       if (cameraRef.current) {
         const photo = await cameraRef.current.takePictureAsync();
-        sendScreenshotToServer(photo.uri);
+        sendScreenshotToServer(photo.uri, username);
       }
     } catch (error) {
       console.error("Error taking screenshot:", error);
-      scheduleScreenshot();
+      setTimeout(()=> {takeAndSendScreenshot()},1000); //wait
+      
     }
   };
 
-  const sendScreenshotToServer = async (imageUri) => {
+  const sendScreenshotToServer = async (imageUri, username) => {
     try {
       const formData = new FormData();
       formData.append("screenshot", {
@@ -60,24 +61,24 @@ export default function CameraSign() {
         setSentence(response.data.sentence);
       }
 
-      scheduleScreenshot();
+      takeAndSendScreenshot();
     } catch (error) {
       console.error("Error sending screenshot to server:", error);
-      scheduleScreenshot();
+      takeAndSendScreenshot();
     }
   };
 
-  const scheduleScreenshot = () => {
-    screenshotTimeout = setTimeout(takeAndSendScreenshot, 750);
-  };
-
   useEffect(() => {
-    takeAndSendScreenshot();
-
-    return () => {
-      clearTimeout(screenshotTimeout);
-    };
-  }, []);
+    storage.load({
+      key: 'user',
+      autoSync: true,
+    }).then(user => {
+      const username = user.username;
+      setUsername(username);
+      console.log(username);
+      takeAndSendScreenshot(username);
+    });
+  }, []); // Empty dependency array to run the effect once
 
   return (
     <SafeAreaView style={styles.container}>

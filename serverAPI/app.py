@@ -1,39 +1,103 @@
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
 from typing import Dict
-from model import HandGestureRecogniser 
-import cv2, model
+import asyncio
+# from model import HandGestureRecogniser 
+from model import mediapipe_detection, draw_landmarks, holistic, actions, extract_keypoints, model as Model
+from model.gestures import landmarking
+import model.gestures as gestures
+import cv2, model, time
 import numpy as np
-import base64
+import base64, threading
 from mongodb import MongoDB, TABLES
 from werkzeug.security import check_password_hash
 from concurrent.futures import ThreadPoolExecutor
 database = MongoDB(*TABLES)
 model.__draw__ = (False, True, True)
-slots:Dict[str, HandGestureRecogniser] = dict()
+# slots:Dict[str, HandGestureRecogniser] = dict()
 app = Flask(__name__)
+sentence = []
+sequence = []
+predictions = []
+frames = []
 # CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}}, methods=['POST', 'GET'])
 def stringToImage(base64_string: str):
     """Decode the numpy array as an image using OpenCV"""
     return cv2.imdecode(np.frombuffer(base64.b64decode(base64_string.split(',')[1]), np.uint8), cv2.IMREAD_COLOR)
+# def predict_action():
+#     global predictions, sentence, sequence, frames
+#     res = Model.predict(np.expand_dims(sequence, axis=0))[0]
+#     print(actions[np.argmax(res)])
+#     predictions.append(np.argmax(res))
+#     if np.unique(predictions[-10:])[0] == np.argmax(res): #Ensuring there are no wrong prediction during transitions
+#         print(f'{res=}')
+#         if res[np.argmax(res)] > 0.4:
+#             if len(sentence) > 0:
+#                 if actions[np.argmax(res)] != sentence[-1]:
+#                     sentence.append(actions[np.argmax(res)])
+#             else:
+#                 sentence.append(actions[np.argmax(res)])
+async def predict():
+    global sequence
+    return Model.predict(np.expand_dims(sequence, axis=0))[0]
+async def gather():
+    global frames
+    tasks = [predict(), gestures.predictions(frames)]
+    results = await asyncio.gather(*tasks)
+    return results
+def predict_action():
+    global predictions, sentence
+    pred = None
+    res, res2 = asyncio.run(gather())
+    predictions.append(np.argmax(res))
+    predictions = predictions[-10:]
+    if res[np.argmax(res)] > 0.4:
+        if np.unique(predictions)[0] != np.argmax(res): #inverted from chris
+            pred = actions[np.argmax(res)]
+    if all(element == res2[0] for element in res2) and res2[0] != 'Blank':
+        pred = res2[0]
+    if pred:
+        if len(sentence) > 0:
+            if pred != sentence[-1]:
+                sentence.append(pred)
+        else:
+            sentence.append(pred)
+
 @app.route('/video', methods=['POST'])
 def process_video() -> Response:
-    global slots
+    global sentence, sequence, frames
     try:
-        session = request.form.get('name')  # Get the name from the form data
-        if not slots.get(session, False): slots[session] = HandGestureRecogniser()
+        start = time.perf_counter()
+        # if not slots.get(session, False): slots[session] = HandGestureRecogniser()
         screenshot = request.files['screenshot']
+        session = request.form.get('name')  # Get the name from the form data
         image_bytes = screenshot.read()
-        frame = cv2.flip(cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR),1)
+       
         if screenshot:
-            processed = f"data:image/jpeg;base64,{base64.b64encode(slots[session].landmarks(frame)).decode('utf-8')}"
-            with open('lastFrame.txt', 'w') as file: file.write(processed) # record last frame for debug
-            print(f"{slots[session]}")
+            frame = cv2.flip(cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR),1)
+            frames.append(frame)
+            frames = frames[-5:]
+            image, results = mediapipe_detection(frame, holistic)
+            keypoints = extract_keypoints(results)
+            sequence.append(keypoints)
+            print(len(sequence))
+            sequence = sequence[-30:]
+            if len(sequence) == 30:
+                threading.Thread(target=predict_action).start()
+
+            #Drawing landmarks
+            draw_landmarks(image, results)
+
+            reti, frame = cv2.imencode(".jpg", image)
+            processed = f"data:image/jpeg;base64,{base64.b64encode(frame.tobytes()).decode('utf-8')}"
+            # with open('lastFrame.txt', 'w') as file: file.write(processed) # record last frame for debug
+            # print(f"{slots[session]}")
+            print(f"time elapsed: {time.perf_counter()-start}")
             return jsonify({
                 'status': 'success',
                 'message': 'Image processed successfully',
                 'image': processed,
-                'sentence': f"{slots[session]}"
+                'sentence': " ".join(sentence)
             })
         else:
             return {'message': 'No screenshot file provided'}, 400
@@ -43,11 +107,9 @@ def process_video() -> Response:
     
 @app.route('/clear', methods=['POST'])
 def clearText() -> None:
-    global slots
-    session = request.json['username']
-    print("clear",session)
-    print(slots)
-    slots[session].clear()
+    global sentence
+    sentence.clear()
+    return jsonify({"success": True})
 
 @app.route("/toggle_landmarks", methods=['POST'])
 def settings() -> None:

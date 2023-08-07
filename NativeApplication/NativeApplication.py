@@ -82,15 +82,16 @@ def create_main_window(user):
 
         if event == sg.WINDOW_CLOSED or event == 'Logout':
             window.close()
-            create_login_window()  # Open the login window again upon logout
+            if event == 'Logout':
+                create_login_window()  # Open the login window again upon logout
             break
         elif event == 'Subtitling':
             window.close()
-            SubtitlingGUI.main()  # Open Window 1
+            SubtitlingGUI.main(user, create_main_window)  # Open Window 1
             break
         elif event == 'Sign Translation':
             window.close()
-            LiveTranslationGUI.main()  # Open Window 2
+            LiveTranslationGUI.main(user, create_main_window)  # Open Window 2
             break
         elif event == '-OPEN-BROWSER-':
             webbrowser.open(url)
