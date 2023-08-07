@@ -4,8 +4,8 @@ import Breadcrumb from '../components/Breadcrumb';
 import SwitcherThree from '../components/SwitcherThree';
 import Webcam from 'react-webcam';
 const videoConstraints = {
-  width: 720,
-  height: 360,
+  width: 850,
+  height: 580,
   facingMode: 'user',
 };
 const Translate = () => {
