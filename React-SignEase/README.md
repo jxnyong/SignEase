@@ -17,7 +17,8 @@ You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along 
 
 - Before running, navigate into the server folder (SignEase\server).
 - Next, locate the server.py file and run it.
-- Then run : <code>npm run dev</code>
+- Lastly, navigate back to the react project (SignEase\React-SignEase) and run the following code :
+  - <code>npm run dev</code>
 
 Now, in the browser go to <code>localhost:5173</code>
 
@@ -29,7 +30,7 @@ Default build output directory: /dist
 This command will generate a dist as build folder in the root of your template that you can upload to your server.
 
 ### Python Dependencies
-- Navigate back to the root directory and run the following command:
-  <code>pip install -r requirements.txt</code>
+- In the react project (SignEase\React-SignEase) directory, run the following command:
+  - <code>pip install -r requirements.txt</code>
 
 
