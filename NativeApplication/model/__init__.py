@@ -7,26 +7,29 @@ try: from . import find
 except ImportError: import find
 try: from . import gestures
 except ImportError: import gestures
-MODELNAME:str = 'refined_action.h5' # change this as needed
-actions = np.array(['bye', 'day', 'hello', 'help', 'how', 'i', 'iloveyou', 'morning', 'my', 'need', 'no', 'please', 'thanks', 'time', 'what', 'when', 'where', 'who', 'why', 'yes', 'you'])
-model = Sequential()
-model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(30,1662))) #64 LSTM units
-model.add(LSTM(128, return_sequences=True, activation='relu'))
-model.add(LSTM(64, return_sequences=False, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(actions.shape[0], activation='softmax'))
-
 __draw__ = (True, True, True)
-
-try: model.load_weights(f'./serverAPI/model/{MODELNAME}')
-except FileNotFoundError: model.load_weights(find.__getfiles__(fullpath=True)[MODELNAME]) #if not under direct directory
-
 #MediaPipe Holistic. --> For keypoint detection on our hands.
 mp_holistic = mp.solutions.holistic 
 #MediaPipe Drawing --> For drawing the keypoints on the hands.
 mp_drawing = mp.solutions.drawing_utils
 holistic = mp_holistic.Holistic(min_detection_confidence=0.8, min_tracking_confidence=0.5)     
+files = find.__getfiles__(fullpath=True)
+# Model for "im_done.h5"
+actions = np.array(['please', 'pull', 'test', 'request', 'review',
+                   'change', 'bug', 'fix', 'integrate', 'code', 'commit', 'and'])
+model = Sequential()
+model.add(LSTM(64, return_sequences=True, activation='relu',
+          input_shape=(30, 1662)))  # 64 LSTM units
+model.add(LSTM(128, return_sequences=True, activation='relu'))
+model.add(LSTM(64, return_sequences=False, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(actions.shape[0], activation='softmax'))
+
+# Loading the model
+MODELNAME = 'action.h5'
+model.load_weights(files[MODELNAME])  # if not under direct directory
 
 def mediapipe_detection(image, model):
     #Converting colour (OpenCV default channel format is BGR)

@@ -10,8 +10,6 @@ import cv2 , numpy as np, model
 import pyvirtualcam
 import PySimpleGUI as sg
 import json
-from typing import Dict, List
-import requests
 
 with open('langConfig.json', 'r') as f:
     data = json.load(f)
