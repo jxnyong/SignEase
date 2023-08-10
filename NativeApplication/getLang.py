@@ -4,8 +4,6 @@ import json
 
 app = Flask(__name__)
 
-
-
 @app.route('/receive', methods=['POST'])
 def access_lang():
     data = request.json  # This assumes the data is sent as JSON in the request body

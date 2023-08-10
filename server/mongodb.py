@@ -3,7 +3,7 @@ from datetime import datetime
 import stripe
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-TABLES =["session", "translations", "users", 'membership', 'transactions']
+TABLES =["session", "translations", "users", 'membership', 'transactions', 'aliveHosts']
 stripe.api_key = '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'
 def get_checkout_history():
     try:
@@ -28,7 +28,7 @@ class MongoDB:
     def __init__(self,*collections,client:str = CLIENT,database:str="SignEase") -> None:
         self._client = MongoClient(client)
         self._database = self._client[database]
-        self.collections = {collection:self._database[collection] for collection in collections if isinstance(collection,str)}
+        self.collections = {collection:self._database[collection] for collection in self._database.list_collection_names() if isinstance(collection,str)}
     def insert_one(self, collection:str, data:dict):
         return self.collections[collection].insert_one(data) 
     def get_user_by_field(self, field: str, fieldname:str="username"):
@@ -93,6 +93,17 @@ class MongoDB:
             if datetime.now() > member['expirationDate']: return False
             return True
         return False
+    def updateAliveHosts(self, email:str, newLink:str):
+        if "aliveHosts" not in self._database.list_collection_names():
+            raise NotImplementedError("aliveHosts collection does not exist")
+        self.collections["aliveHosts"].update_one(
+            {"email": email},
+            {"$set": {"link": newLink}},
+        )
+    def getAliveHost(self, email:str):
+        if "aliveHosts" not in self._database.list_collection_names():
+            raise NotImplementedError("aliveHosts collection does not exist")
+        return self.collections["aliveHosts"].find_one({"email": email}).get('link', None)
     @property
     def database(self):
         return self._database
@@ -101,13 +112,14 @@ class MongoDB:
         return self.collections
     
 if __name__ == "__main__":
-    db = MongoDB("session", "translations", "users", 'membership', 'transactions')
+    db = MongoDB()
     data = {
-        "conversation": "I love you",
-        "userId": 0, 
-        "sessionId": 0, 
+        "email": "andrewlinyongsheng@gmail.com",
+        "link" : "https://cabf-175-156-152-50.ngrok-free.app",
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
     }
+    db.updateAliveHosts("andrewlinyongsheng@gmail.com", 'hello!')
+    # db.insert_one('aliveHosts', data)
     # db.syncStripeTransactions()
     # db.syncMembership()
-    print(db.checkStripeMembership('sam'))
+    # print(db.checkStripeMembership('sam'))
