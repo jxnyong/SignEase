@@ -8,8 +8,8 @@ from app import app, db2
 CONFIG_FILE = 'langConfig.json'
 @app.route('/process', methods=['POST', 'GET'])
 def process():
-    email = request.form.get('email')
-    language = request.form.get('language')
+    email = request.json.get('email')
+    language = request.json.get('language')
     
     # For example, print them to the console:
     print(f'Email: {email}, Language: {language}')
@@ -26,7 +26,7 @@ def process():
     except requests.exceptions.ConnectionError as e:
         print(e)
     # return "Data successfully"
-    return redirect("http://localhost:5173/")
+    return jsonify({"success": True}),200
     # f"Email: {email}, Language: {language}"
 @app.route('/setLink',  methods=['POST'])
 def setLink():

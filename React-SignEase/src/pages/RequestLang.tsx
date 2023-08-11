@@ -1,11 +1,33 @@
 import Breadcrumb from '../components/Breadcrumb';
+import { useState } from 'react';
+import axios from 'axios';
 
 const RequestLang = () => {
-  
+  const [selectedLanguage, setSelectedLanguage] = useState('english');
+  const [email, getEmail] = useState('');
+  const [showPopup, setShowPopup] = useState(false); // State to control pop-up visibility
+  const handleSaveClick = async() => {
+    setShowPopup(true); // pop-up when the "Save" button is clicked
+    await axios.post('http://localhost:5000/process', {
+      "language": selectedLanguage,
+      "email": email
+    })
+    
+  }
+  const handleEmail = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    getEmail(event.target.value);
+  };
+  const handleLanguageChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedLanguage(event.target.value);
+  };
   
   return (
-  
-    <form method="POST" action="http://localhost:5000/process">
+    // action="http://localhost:5000/process"
+    <form method="POST"> 
       <div className="mx-auto max-w-270">
         <Breadcrumb pageName="Request Language" />
             <div className="w-full sm:w-1/2">
@@ -40,7 +62,8 @@ const RequestLang = () => {
                   type="text"
                   name="email"
                   id="email"
-                  placeholder="Enter Email:"
+                  placeholder="Enter Email:" 
+                  onInput={handleEmail}
                 />
               </div>
             </div>
@@ -82,7 +105,7 @@ const RequestLang = () => {
                     </svg>
                   </span>
                   <select className="relative z-20 w-full appearance-none rounded border border-strokewhite bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input" defaultValue={"english"} name="language"
-                  id="language">
+                  id="language" onChange={handleLanguageChange}>
                     <option value="En">English</option>
                     <option value="Zh">Chinese</option>
                     <option value="Ja">Japanese</option>
@@ -112,14 +135,25 @@ const RequestLang = () => {
           <div className="flex justify-end gap-4.5">
               <button
               className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
-              type="submit"
+              type="button" onClick={handleSaveClick}
               >
                 Save
               </button>
             </div>
           </div>
+          {showPopup && (
+          <div className="popup-container">
+          {/* Content for the pop-up */}
+            <div className="popup">
+              <p>Your Request Language Submitted.</p>
+              <button className="close-button" onClick={() => setShowPopup(false)} >
+                Close
+              </button>
+            </div>
+          </div>
+          )}
     </form>
-
+    
   );
 };
 
