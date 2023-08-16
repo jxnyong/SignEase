@@ -1,6 +1,9 @@
+#this is specifically for translate, does not have capability of translating romanji/romanized text.
+#does not have dependency issue with httpx > mongodb
 from translate import Translator
 import json, re
 
+#language code: Zh, En, Ja
 #to retrieve default/current settings
 with open('langConfig.json', 'r') as f:
     data = json.load(f)

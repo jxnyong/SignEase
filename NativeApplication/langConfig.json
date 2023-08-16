@@ -14,12 +14,12 @@
         ]
     },
     "Setting": {
-        "inputLanguage": "En",
-        "outputLanguage": "Ja"
+        "inputLanguage": "Ja",
+        "outputLanguage": "Zh-CN"
     },
     "Languages": {
         "Zh": "lang/CN/NotoSansSC-Black.otf",
         "Ja": "lang/JP/static/NotoSansJP-Black.ttf"
     },
-    "url-domain": "https://localhost:5173/"
+    "url-domain": "https://a144-203-127-47-48.ngrok-free.app"
 }
