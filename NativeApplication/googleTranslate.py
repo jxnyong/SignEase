@@ -35,7 +35,7 @@ def extract_complete_sentences(file_path):
     complete_sentences = []
 
     for sentence in sentences:
-        if re.search(r'[.!?]$', sentence):
+        if re.search(r'[.!?。]$', sentence):
             # sentence ends with punctuation, consider it a complete sentence.
             complete_sentences.append(sentence)
 

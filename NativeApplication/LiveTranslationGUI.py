@@ -1,3 +1,4 @@
+from GPT_NLP import NLP
 from langTranslate import extract_complete_sentences, translate_text
 from model import HandGestureRecogniser
 # pip install --upgrade httpx
@@ -9,7 +10,7 @@ from translate import Translator
 import cv2 , numpy as np, model
 import pyvirtualcam
 import PySimpleGUI as sg
-import json
+import json #, keyboard
 
 with open('langConfig.json', 'r') as f:
     data = json.load(f)
@@ -41,6 +42,8 @@ def main(users:str=None, callback:callable=None):
     with pyvirtualcam.Camera(width=1280, height=800, fps=20, fmt=pyvirtualcam.PixelFormat.BGR) as cam:
         while True:
             event, values = window.read(timeout=20)
+            # if keyboard.
+            #     recording = not recording
             if event == 'Exit' or event == sg.WIN_CLOSED: 
                 if callback:
                     callback(users)
@@ -64,7 +67,9 @@ def main(users:str=None, callback:callable=None):
                 with open('transcript.txt', 'w') as f:
                     if recog.transcript != contents and recog.transcript != '':
                         #implement langTranslate here (but require NLP to function first.)
-                        f.write(recog.transcript) #.replace(' ','').lower()
+                        # NLP.correction()
+                        f.write(recog.transcript)
+
                         speak(recog.lastWord, (True if values['Output'] == 'Microphone' else False), file="speech")
                     else:
                         f.write(contents)

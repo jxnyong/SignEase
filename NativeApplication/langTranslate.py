@@ -1,5 +1,6 @@
 #this is specifically for translate, does not have capability of translating romanji/romanized text.
 #does not have dependency issue with httpx > mongodb
+import cv2
 from translate import Translator
 import json, re
 
@@ -16,6 +17,13 @@ def getOutLang(configFile:str='langConfig.json'):
         data = json.load(f)
         outLANG:str = data["Setting"]["outputLanguage"]
     return outLANG
+
+def getFONT(configFile:str='langConfig.json'):
+    with open(configFile, 'r') as f:
+        data = json.load(f)
+        outLANG:str = data["Setting"]["outputLanguage"]
+        FONT = cv2.FONT_HERSHEY_PLAIN if outLANG == "En" else data["Languages"][outLANG]
+    return FONT
 
 #translation, perform retrieval of output language constantly
 def translate_text(text):

@@ -6,6 +6,7 @@
         ],
         "Cn": [
             "Zh",
+            "Zh-CN",
             "Chinese"
         ],
         "Jp": [
@@ -14,8 +15,8 @@
         ]
     },
     "Setting": {
-        "inputLanguage": "Ja",
-        "outputLanguage": "Zh-CN"
+        "inputLanguage": "En",
+        "outputLanguage": "En"
     },
     "Languages": {
         "Zh": "lang/CN/NotoSansSC-Black.otf",

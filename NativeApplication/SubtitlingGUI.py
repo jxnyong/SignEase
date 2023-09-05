@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from langTranslate import translate_text, extract_complete_sentences
+from langTranslate import getFONT, getOutLang, translate_text, extract_complete_sentences
 from mongodb import MongoDB
 from datetime import datetime
 import PySimpleGUI as sg
@@ -85,7 +85,9 @@ class SpeechRecognition:
                     )
                     text = result['text'].strip()
                     with open('subtitles.txt', 'w', encoding="utf-8") as f:
-                        if inLANG != outLANG:f.write(translate_text(text))
+                        outLANG = getOutLang()
+                        if inLANG != outLANG:
+                            f.write(translate_text(text))
                         else: f.write(text)
                     if self._verbose:
                         print(text)
@@ -95,15 +97,17 @@ class SpeechRecognition:
 
 def readTranscript(words:int, *, file='subtitles.txt') -> str:
     with open(file, 'r', encoding='utf-8') as f:
+        outLANG = getOutLang()
         if outLANG == 'En':
             return " ".join(f.read().split(" ")[-words:])
         return " ".join(f.read()[-words:])
-        
+
+
+
 def putText(frame, text, *, coordinates:tuple=(100,660), font = cv2.FONT_HERSHEY_PLAIN, color:tuple=(0,0,0)):
     thickness = 2
     if isinstance(font, int):
         return cv2.putText(frame, text, coordinates, font, 2, color, thickness, cv2.LINE_AA)
-    #if not english
     frame_pil = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
     draw = ImageDraw.Draw(frame_pil)
     font = ImageFont.truetype(font, 45)
@@ -155,7 +159,7 @@ def main(user:str=None, callback:callable=None):
                 frame = cv2.resize(frame, (1280, 800), interpolation=cv2.BORDER_DEFAULT)
                 frame = cv2.flip(frame, 1)
                 if (transcript:=readTranscript(11)):
-                    frame = putText(frame,transcript, color=(255,255,255), font= FONT)
+                    frame = putText(frame,transcript, color=(255,255,255), font=getFONT())
                 imgbytes = cv2.imencode('.png', cv2.resize(frame, (600, 400), interpolation=cv2.BORDER_DEFAULT))[1].tobytes()  # ditto
                 # frame = cv2.flip(frame, 1)
                 cam.send(frame)
