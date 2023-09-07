@@ -28,7 +28,7 @@ class NLP:
         self.messages.append({"role": "assistant", "content": response["choices"][0]["message"].content})
         return response
     def correction(self, message):
-        return self.correction_raw(message)["choices"][0]["message"]
+        return self.correction_raw(message)["choices"][0]["message"]['content']
     def addcontext(self, context):
         """Add Context"""
         self.messages.append({"role": "assistant", "content": context})
@@ -42,15 +42,16 @@ class NLP:
     def chat(self, message):
         return self.chat(message)["choices"][0]["message"]
 
-def nlp_file(filename, _inst = NLP()):
+def nlp_file(filename, _inst = NLP()) -> None:
     with open(filename, 'r') as file:
         text = file.read()
+    if text.strip() == "": return
     newText = _inst.correction(text)
-    with open(filename, 'w') as file:
-        rd = file.read()
-        file.write(f"{rd.replace(text,newText)}")
+    with open(filename, 'w+') as file:
+        file.write(newText)
 if __name__ == "__main__":
-    while True:
-        nlp = NLP()
-        prompt = input("What is your input: ")
-        print(nlp.correction_raw(prompt))
+    nlp_file('transcript.txt')
+    # while True:
+    #     nlp = NLP()
+    #     prompt = input("What is your input: ")
+    #     print(nlp.correction(prompt))

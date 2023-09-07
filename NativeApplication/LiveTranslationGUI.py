@@ -10,7 +10,7 @@ import cv2 , numpy as np, model
 import pyvirtualcam
 import PySimpleGUI as sg
 import json, keyboard
-
+from GPT_NLP import nlp_file, NLP
 with open('langConfig.json', 'r') as f:
     data = json.load(f)
     inLANG:str = data["Setting"]["inputLanguage"]
@@ -23,6 +23,7 @@ with open('langConfig.json', 'r') as f:
 #     return outLANG
 
 def main(users:str=None, callback:callable=None):
+    nlp = NLP()
     cap = cv2.VideoCapture(0)
     recog = HandGestureRecogniser()
     model.__draw__ = (False, False, True)
@@ -43,6 +44,7 @@ def main(users:str=None, callback:callable=None):
             event, values = window.read(timeout=20)
             if keyboard.is_pressed(hotkey):
                 event = 'Stop' if recording else "Record"
+                nlp_file('transcript.txt', nlp)
             if event == 'Exit' or event == sg.WIN_CLOSED: 
                 if callback:
                     callback(users)
