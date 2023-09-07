@@ -41,6 +41,14 @@ class NLP:
         return response
     def chat(self, message):
         return self.chat(message)["choices"][0]["message"]
+
+def nlp_file(filename, _inst = NLP()):
+    with open(filename, 'r') as file:
+        text = file.read()
+    newText = _inst.correction(text)
+    with open(filename, 'w') as file:
+        rd = file.read()
+        file.write(f"{rd.replace(text,newText)}")
 if __name__ == "__main__":
     while True:
         nlp = NLP()

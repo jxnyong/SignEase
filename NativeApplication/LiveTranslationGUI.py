@@ -1,4 +1,3 @@
-from GPT_NLP import NLP
 from langTranslate import extract_complete_sentences, translate_text
 from model import HandGestureRecogniser
 # pip install --upgrade httpx
@@ -10,13 +9,13 @@ from translate import Translator
 import cv2 , numpy as np, model
 import pyvirtualcam
 import PySimpleGUI as sg
-import json #, keyboard
+import json, keyboard
 
 with open('langConfig.json', 'r') as f:
     data = json.load(f)
     inLANG:str = data["Setting"]["inputLanguage"]
     outLANG:str = data["Setting"]["outputLanguage"]
-
+    hotkey:str = data["hotkey"]
 # def getlang(configFile:str='langConfig.json'):
 #     with open(configFile, 'r') as f:
 #         data = json.load(f)
@@ -42,8 +41,8 @@ def main(users:str=None, callback:callable=None):
     with pyvirtualcam.Camera(width=1280, height=800, fps=20, fmt=pyvirtualcam.PixelFormat.BGR) as cam:
         while True:
             event, values = window.read(timeout=20)
-            # if keyboard.
-            #     recording = not recording
+            if keyboard.is_pressed(hotkey):
+                event = 'Stop' if recording else "Record"
             if event == 'Exit' or event == sg.WIN_CLOSED: 
                 if callback:
                     callback(users)
@@ -60,16 +59,14 @@ def main(users:str=None, callback:callable=None):
                 ret, frame = cap.read()
                 decoded_image = cv2.imdecode(np.frombuffer(recog.landmarks(frame), np.uint8), cv2.IMREAD_COLOR)
                 # cv2.imshow("preview", decoded_image)
-                
                 with open('transcript.txt', 'r') as f:
                     contents = f.read()
                 print(f'{recog.transcript=}\n{contents=}')
                 with open('transcript.txt', 'w') as f:
                     if recog.transcript != contents and recog.transcript != '':
                         #implement langTranslate here (but require NLP to function first.)
-                        # NLP.correction()
-                        f.write(recog.transcript)
-
+                        transcript = recog.transcript
+                        f.write(recog.transcript) #.replace(' ','').lower()
                         speak(recog.lastWord, (True if values['Output'] == 'Microphone' else False), file="speech")
                     else:
                         f.write(contents)

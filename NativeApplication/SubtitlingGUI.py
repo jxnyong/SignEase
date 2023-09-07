@@ -4,7 +4,7 @@ from mongodb import MongoDB
 from datetime import datetime
 import PySimpleGUI as sg
 import cv2, pyvirtualcam
-import threading, io,  whisper, torch, json, numpy as np
+import threading, io,  whisper, torch, json, numpy as np, keyboard
 from PIL import ImageFont, ImageDraw, Image
 import speech_recognition as sr
 from queue import Queue
@@ -18,6 +18,7 @@ with open('langConfig.json', 'r') as f:
     inLANG:str = data["Setting"]["inputLanguage"]
     outLANG:str = data["Setting"]["outputLanguage"]
     OPTIONS = data['Options']
+    hotkey:str = data["hotkey"]
     FONT = cv2.FONT_HERSHEY_PLAIN if outLANG == "En" else data["Languages"][outLANG]
 
 #parameters
@@ -136,6 +137,8 @@ def main(user:str=None, callback:callable=None):
     with pyvirtualcam.Camera(width=1280, height=800, fps=20, fmt=pyvirtualcam.PixelFormat.BGR) as cam:
         while True:
             event, values = window.read(timeout=20)
+            if keyboard.is_pressed(hotkey):
+                event = 'Stop' if recording else "Record"
             if event == 'Exit' or event == sg.WIN_CLOSED:
                 if callback:
                     callback(user)
