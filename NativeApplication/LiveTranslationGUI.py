@@ -44,7 +44,6 @@ def main(users:str=None, callback:callable=None):
             event, values = window.read(timeout=20)
             if keyboard.is_pressed(hotkey):
                 event = 'Stop' if recording else "Record"
-                nlp_file('transcript.txt', nlp)
             if event == 'Exit' or event == sg.WIN_CLOSED: 
                 if callback:
                     callback(users)
@@ -56,6 +55,7 @@ def main(users:str=None, callback:callable=None):
             elif event == 'Stop':
                 window['Stop'].Update(visible=False)
                 window['Record'].Update(visible=True)
+                nlp_file('transcript.txt', nlp)
                 recording = False
             if recording:
                 ret, frame = cap.read()
@@ -81,7 +81,6 @@ def main(users:str=None, callback:callable=None):
                 # this is faster, shorter and needs less includes
                 imgbytes = cv2.imencode('.png', cv2.resize(img, (600, 400), interpolation=cv2.BORDER_DEFAULT))[1].tobytes()
                 window['image'].update(data=imgbytes)
-
     # Release resources/Turning off webcam
     cap.release()
     cv2.destroyAllWindows()

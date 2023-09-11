@@ -22,5 +22,6 @@
         "Zh": "lang/CN/NotoSansSC-Black.otf",
         "Ja": "lang/JP/static/NotoSansJP-Black.ttf"
     },
-    "url-domain": "https://a144-203-127-47-48.ngrok-free.app"
+    "url-domain": "https://a144-203-127-47-48.ngrok-free.app",
+    "hotkey": "k"
 }

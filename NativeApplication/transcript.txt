@@ -1,1 +1,1 @@
-I integrate the DB.
+I am responsible for integrating the database.
