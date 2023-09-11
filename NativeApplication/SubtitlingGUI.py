@@ -19,7 +19,7 @@ with open('langConfig.json', 'r') as f:
     outLANG:str = data["Setting"]["outputLanguage"]
     OPTIONS = data['Options']
     hotkey:str = data["hotkey"]
-    FONT = cv2.FONT_HERSHEY_PLAIN if outLANG == "En" else data["Languages"][outLANG]
+    FONT = cv2.FONT_HERSHEY_PLAIN if outLANG in ["En","Ms"] else data["Languages"][outLANG]
 
 #parameters
 DEFAULT_SETTINGS = {
@@ -99,7 +99,7 @@ class SpeechRecognition:
 def readTranscript(words:int, *, file='subtitles.txt') -> str:
     with open(file, 'r', encoding='utf-8') as f:
         outLANG = getOutLang()
-        if outLANG == 'En':
+        if outLANG in ["En","Ms"]:
             return " ".join(f.read().split(" ")[-words:])
         return " ".join(f.read()[-words:])
 
