@@ -55,7 +55,8 @@ def main(users:str=None, callback:callable=None):
             elif event == 'Stop':
                 window['Stop'].Update(visible=False)
                 window['Record'].Update(visible=True)
-                nlp_file('transcript.txt', nlp)
+                text = nlp_file('transcript.txt', nlp)
+                speak(text, (True if values['Output'] == 'Microphone' else False), file="speech")
                 recording = False
             if recording:
                 ret, frame = cap.read()
@@ -69,7 +70,6 @@ def main(users:str=None, callback:callable=None):
                         #implement langTranslate here (but require NLP to function first.)
                         transcript = recog.transcript
                         f.write(recog.transcript) #.replace(' ','').lower()
-                        speak(recog.lastWord, (True if values['Output'] == 'Microphone' else False), file="speech")
                     else:
                         f.write(contents)
                 imgbytes = cv2.imencode('.png', cv2.resize(decoded_image, (600, 400), interpolation=cv2.BORDER_DEFAULT))[1].tobytes()  # ditto

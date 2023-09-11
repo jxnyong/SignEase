@@ -49,6 +49,7 @@ def nlp_file(filename, _inst = NLP()) -> None:
     newText = _inst.correction(text)
     with open(filename, 'w+') as file:
         file.write(newText)
+    return newText
 if __name__ == "__main__":
     nlp_file('transcript.txt')
     # while True:
