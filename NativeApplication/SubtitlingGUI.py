@@ -140,12 +140,9 @@ def main(user:str=None, callback:callable=None):
             if keyboard.is_pressed(hotkey):
                 event = 'Stop' if recording else "Record"
             if event == 'Exit' or event == sg.WIN_CLOSED:
-                if callback:
-                    callback(user)
                 speech_recognisor.stop_event.set()
                 speechRecogniser_thread.join()
-                
-                return
+                break
             elif event == 'Record':
                 speech_recognisor.pause_event.set()
                 window['Stop'].Update(visible=True)
@@ -184,6 +181,7 @@ def main(user:str=None, callback:callable=None):
             "user": user, 
         }
         db.insert_one("translations", data)
-        
+    if callback:
+        callback(user)
 if __name__ == "__main__":
     main()

@@ -69,7 +69,6 @@ class HandGestureRecogniser():
         self.predictions:list = []
         self.frames:list = []
         self.threshold = threshold
-    
     async def predict(self):
         return model.predict(np.expand_dims(self.sequence, axis=0))[0]
     async def gather(self):
@@ -113,6 +112,8 @@ class HandGestureRecogniser():
     @property
     def lastWord(self) -> str:
         return self.sentence[-1:]
+    def clear(self) -> str:
+        self.sentence.clear()
     def __repr__(self) -> str:
         return ' '.join(self.sentence)
 __all__ = ['HandGestureRecogniser',]

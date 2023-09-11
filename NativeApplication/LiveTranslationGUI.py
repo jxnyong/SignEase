@@ -1,10 +1,10 @@
-from langTranslate import extract_complete_sentences, translate_text
+from langTranslate import extract_complete_sentences, getOutLang, translate_text
 from model import HandGestureRecogniser
 # pip install --upgrade httpx
 # pip install --upgrade httpcore
 from mongodb import MongoDB
 from datetime import datetime
-from Text2Speech import speak
+from Text2Speech import speak, change_language
 from translate import Translator
 import cv2 , numpy as np, model
 import pyvirtualcam
@@ -23,6 +23,8 @@ with open('langConfig.json', 'r') as f:
 #     return outLANG
 
 def main(users:str=None, callback:callable=None):
+    with open('transcript.txt', 'w') as f:f.write("")
+    with open('transcriptLog.txt', 'w') as t:t.write("")
     nlp = NLP()
     cap = cv2.VideoCapture(0)
     recog = HandGestureRecogniser()
@@ -33,11 +35,9 @@ def main(users:str=None, callback:callable=None):
                 [sg.Combo(['Microphone','Speaker'],default_value='Microphone',key='Output',size=(10, 2),font='Helvetica 14',readonly=True), 
                 sg.Button('Record', size=(10, 1), font='Helvetica 14'),
                 sg.Button('Stop', size=(10, 1), font='Any 14',visible=False),]]
-
     # create the window and show it without the plot
     window = sg.Window('Live Subtitling',
                         layout, location=(100, 100), icon='logo.ico')
-
     recording = False
     with pyvirtualcam.Camera(width=1280, height=800, fps=20, fmt=pyvirtualcam.PixelFormat.BGR) as cam:
         while True:
@@ -45,8 +45,6 @@ def main(users:str=None, callback:callable=None):
             if keyboard.is_pressed(hotkey):
                 event = 'Stop' if recording else "Record"
             if event == 'Exit' or event == sg.WIN_CLOSED: 
-                if callback:
-                    callback(users)
                 break
             elif event == 'Record':
                 window['Record'].Update(visible=False)
@@ -56,7 +54,19 @@ def main(users:str=None, callback:callable=None):
                 window['Stop'].Update(visible=False)
                 window['Record'].Update(visible=True)
                 text = nlp_file('transcript.txt', nlp)
-                speak(text, (True if values['Output'] == 'Microphone' else False), file="speech")
+                if text:
+                    outLang = getOutLang()
+                    if(outLang!="En"):
+                        text = translate_text(text)
+                    change_language(outLang)
+                    speak(text, (True if values['Output'] == 'Microphone' else False), file="speech")
+                    #add text into transcriptLog as history
+                    with open('transcriptLog.txt', 'a', encoding='utf-8' ) as t:
+                        t.write(text)
+                    #clear textfile to be written again
+                    with open('transcript.txt', 'w', encoding='utf-8') as f:
+                        recog.clear()
+                        f.write("")
                 recording = False
             if recording:
                 ret, frame = cap.read()
@@ -69,7 +79,7 @@ def main(users:str=None, callback:callable=None):
                     if recog.transcript != contents and recog.transcript != '':
                         #implement langTranslate here (but require NLP to function first.)
                         transcript = recog.transcript
-                        f.write(recog.transcript) #.replace(' ','').lower()
+                        f.write(recog.transcript)
                     else:
                         f.write(contents)
                 imgbytes = cv2.imencode('.png', cv2.resize(decoded_image, (600, 400), interpolation=cv2.BORDER_DEFAULT))[1].tobytes()  # ditto
@@ -84,27 +94,28 @@ def main(users:str=None, callback:callable=None):
     # Release resources/Turning off webcam
     cap.release()
     cv2.destroyAllWindows()
-
-    #read transcript.txt to translate the language and put into translatedText.txt
-    # for LiveTranslation
-    with open('translatedText.txt', 'w', encoding='utf-8' ) as f:
-        target_language = outLANG #language to translate to
-        with open('transcript.txt', 'r', encoding='utf-8') as t:
-            file_path = "transcript.txt"
-            complete_sentences = extract_complete_sentences(file_path)
-            separator = ' '  #  separator between the elements of the list
-            strCompleteSentences = separator.join(complete_sentences)
-        f.write(translate_text(strCompleteSentences))
+    # #read transcript.txt to translate the language and put into translatedText.txt
+    # # for LiveTranslation
+    # with open('translatedText.txt', 'w', encoding='utf-8' ) as f:
+    #     target_language = outLANG #language to translate to
+    #     with open('transcript.txt', 'r', encoding='utf-8') as t:
+    #         file_path = "transcript.txt"
+    #         complete_sentences = extract_complete_sentences(file_path)
+    #         separator = ' '  #  separator between the elements of the list
+    #         strCompleteSentences = separator.join(complete_sentences)
+    #     f.write(translate_text(strCompleteSentences))
         
 
-    with open('transcript.txt', 'r') as f: #change transcript.txt to translatedText.txt if needed
-        if len(transcript:=f.read())>0:
+    with open('transcriptLog.txt', 'r', encoding='utf-8') as f: #change transcript.txt to translatedText.txt if needed
+        if len(transcriptLog:=f.read())>0:
             db = MongoDB("session", "translations", "users")
             data = {
-                "conversation": f"{transcript}",
+                "conversation": f"{transcriptLog}",
                 "userId": 0, 
                 "sessionId": 0, 
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
                 "users": users, 
             }
             db.insert_one("translations", data)
+    if callback:
+        callback(users)

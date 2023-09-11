@@ -19,7 +19,13 @@ def device() -> None:
     print("Outputs:", devices.audio.get_audio_device_names(False))
     # [get_audio_device_name(x, 0).decode() for x in range(get_num_audio_devices(0))]
     mixer.quit()
-
+def change_language(language:str, engine:pyttsx3.Engine=engine):
+    """Language access windows language pack. So you must have the language installed on windows"""
+    for voice in engine.getProperty('voices'):
+        if language.upper() in voice.id:
+            engine.setProperty('voice', voice.id)
+            return True
+    raise RuntimeError("Language '{}' not found".format(language))
 def speak(text, microphone:bool=True, *, file:str=get_random_string(6)):
     # Save speech as audio file
     engine.save_to_file(text, f"{TEMP}/{file}.wav")
@@ -35,5 +41,8 @@ def speak(text, microphone:bool=True, *, file:str=get_random_string(6)):
         sa.WaveObject.from_wave_file(f"{TEMP}/{file}.wav").play().wait_done()
     os.remove(f"{TEMP}/{file}.wav")
 if __name__ == "__main__":
-    speak("The quick brown fox jumped over the lazy dog.")
-    speak("Testing")
+    change_language('zh')
+    # print([v.languages for v in engine.getProperty('voices')])
+    # for voice in engine.getProperty('voices'):
+    #     print(voice)
+    speak("我整合更改并审查错误", False ,file='speech')

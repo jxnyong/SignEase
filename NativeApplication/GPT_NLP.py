@@ -15,7 +15,7 @@ class NLP:
         self.model = model
         self.origin_message = {
             "role": "assistant",
-            "content": "Your role is to correct and create various incorrect sentences in a business meeting context, addressing issues like grammar, incorrect words, or missing words."
+            "content": "Your role is to correct and create various incorrect sentences in a IT business meeting context, addressing issues like grammar, incorrect words, or missing words. Give only the corrected sentence."
             }
         self.messages = [self.origin_message,]
     #@timer
@@ -45,7 +45,7 @@ class NLP:
 def nlp_file(filename, _inst = NLP()) -> None:
     with open(filename, 'r') as file:
         text = file.read()
-    if text.strip() == "": return
+    if text.strip() == "": return ""
     newText = _inst.correction(text)
     with open(filename, 'w+') as file:
         file.write(newText)
