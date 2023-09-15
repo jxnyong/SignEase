@@ -12,15 +12,26 @@
         "Jp": [
             "Ja",
             "Japanese"
+        ],
+        "Ms": [
+            "Ms",
+            "Malay",
+            "May"
+        ],
+        "Ta": [
+            "Ta",
+            "Tam",
+            "Tamil"
         ]
     },
     "Setting": {
         "inputLanguage": "En",
-        "outputLanguage": "Ja"
+        "outputLanguage": "Ta"
     },
     "Languages": {
         "Zh": "lang/CN/NotoSansSC-Black.otf",
-        "Ja": "lang/JP/static/NotoSansJP-Black.ttf"
+        "Ja": "lang/JP/static/NotoSansJP-Black.ttf",
+        "Ta": "lang/TA/static/NotoSansTamil_Condensed-Black.ttf"
     },
     "url-domain": "https://a144-203-127-47-48.ngrok-free.app",
     "hotkey": "k"
