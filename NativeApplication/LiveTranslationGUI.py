@@ -5,7 +5,6 @@ from model import HandGestureRecogniser
 from mongodb import MongoDB
 from datetime import datetime
 from Text2Speech import speak, change_language
-from translate import Translator
 import cv2 , numpy as np, model
 import pyvirtualcam
 import PySimpleGUI as sg
@@ -16,6 +15,7 @@ with open('langConfig.json', 'r') as f:
     inLANG:str = data["Setting"]["inputLanguage"]
     outLANG:str = data["Setting"]["outputLanguage"]
     hotkey:str = data["hotkey"]
+
 # def getlang(configFile:str='langConfig.json'):
 #     with open(configFile, 'r') as f:
 #         data = json.load(f)
@@ -104,8 +104,7 @@ def main(users:str=None, callback:callable=None):
     #         separator = ' '  #  separator between the elements of the list
     #         strCompleteSentences = separator.join(complete_sentences)
     #     f.write(translate_text(strCompleteSentences))
-        
-
+    
     with open('transcriptLog.txt', 'r', encoding='utf-8') as f: #change transcript.txt to translatedText.txt if needed
         if len(transcriptLog:=f.read())>0:
             db = MongoDB("session", "translations", "users")

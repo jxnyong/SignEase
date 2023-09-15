@@ -117,6 +117,7 @@ def putText(frame, text, *, coordinates:tuple=(100,660), font = cv2.FONT_HERSHEY
 
 
 def main(user:str=None, callback:callable=None):
+    with open('subtitles.txt', 'w') as f:f.write("") #remove previous text
     speech_recognisor = SpeechRecognition(verbose=True)
     sg.theme('DarkBlack1')
     # define the window layout

@@ -22,7 +22,7 @@ def getFONT(configFile:str='langConfig.json'):
     with open(configFile, 'r') as f:
         data = json.load(f)
         outLANG:str = data["Setting"]["outputLanguage"]
-        FONT = cv2.FONT_HERSHEY_PLAIN if outLANG == "En" else data["Languages"][outLANG]
+        FONT = cv2.FONT_HERSHEY_PLAIN if outLANG in ["En", "Ms"] else data["Languages"][outLANG]
     return FONT
 
 #translation, perform retrieval of output language constantly
