@@ -1,5 +1,6 @@
 import pyttsx3,os,time, string, random, simpleaudio as sa
 from pygame import mixer, _sdl2 as devices
+from background_process import background
 TEMP = "TEMP"
 
 # Initialize mixer with the correct device
@@ -26,6 +27,9 @@ def change_language(language:str, engine:pyttsx3.Engine=engine):
             engine.setProperty('voice', voice.id)
             return True
     raise RuntimeError("Language '{}' not found".format(language))
+
+
+@background
 def speak(text, microphone:bool=True, *, file:str=get_random_string(6)):
     # Save speech as audio file
     engine.save_to_file(text, f"{TEMP}/{file}.wav")
@@ -40,9 +44,12 @@ def speak(text, microphone:bool=True, *, file:str=get_random_string(6)):
     else:
         sa.WaveObject.from_wave_file(f"{TEMP}/{file}.wav").play().wait_done()
     os.remove(f"{TEMP}/{file}.wav")
+
+
+
 if __name__ == "__main__":
-    change_language('zh')
-    # print([v.languages for v in engine.getProperty('voices')])
-    # for voice in engine.getProperty('voices'):
-    #     print(voice)
-    speak("我整合更改并审查错误", False ,file='speech')
+    # change_language('zh')
+    print([v.languages for v in engine.getProperty('voices')])
+    for voice in engine.getProperty('voices'):
+        print(voice)
+    # speak("我整合更改并审查错误", False ,file='speech')

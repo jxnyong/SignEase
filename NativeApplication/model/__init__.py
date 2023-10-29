@@ -102,8 +102,8 @@ class HandGestureRecogniser():
         self.sequence.append(keypoints)
         self.sequence = self.sequence[-30:]
         self.frames = self.frames[-5:]
-        if len(self.sequence) == 30:
-            self.predict_action()
+        # if len(self.sequence) == 30:
+        #     self.predict_action()
         reti, frame = cv2.imencode(".jpg", image)
         return frame.tobytes()
     @property

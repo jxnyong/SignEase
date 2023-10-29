@@ -21,9 +21,9 @@ with open('langConfig.json', 'r') as f:
 #         data = json.load(f)
 #         outLANG:str = data["Setting"]["outputLanguage"]
 #     return outLANG
-
+DEFAULTIMAGE = cv2.imread("cameraDisabled.png")
 def main(users:str=None, callback:callable=None):
-    with open('transcript.txt', 'w') as f:f.write("")
+    # with open('transcript.txt', 'w') as f:f.write("")
     with open('transcriptLog.txt', 'w') as t:t.write("")
     nlp = NLP()
     cap = cv2.VideoCapture(0)
@@ -64,12 +64,12 @@ def main(users:str=None, callback:callable=None):
                     with open('transcriptLog.txt', 'a', encoding='utf-8' ) as t:
                         t.write(text)
                     #clear textfile to be written again
-                    with open('transcript.txt', 'w', encoding='utf-8') as f:
-                        recog.clear()
-                        f.write("")
+                    # with open('transcript.txt', 'w', encoding='utf-8') as f:
+                    #     recog.clear()
+                    #     f.write("")
                 recording = False
+            ret, frame = cap.read()
             if recording:
-                ret, frame = cap.read()
                 decoded_image = cv2.imdecode(np.frombuffer(recog.landmarks(frame), np.uint8), cv2.IMREAD_COLOR)
                 # cv2.imshow("preview", decoded_image)
                 with open('transcript.txt', 'r') as f:
@@ -87,9 +87,8 @@ def main(users:str=None, callback:callable=None):
                 cam.sleep_until_next_frame()
                 window['image'].update(data=imgbytes)
             else:
-                img = cv2.imread("cameraDisabled.png")
                 # this is faster, shorter and needs less includes
-                imgbytes = cv2.imencode('.png', cv2.resize(img, (600, 400), interpolation=cv2.BORDER_DEFAULT))[1].tobytes()
+                imgbytes = cv2.imencode('.png', cv2.resize(frame, (600, 400), interpolation=cv2.BORDER_DEFAULT))[1].tobytes()
                 window['image'].update(data=imgbytes)
     # Release resources/Turning off webcam
     cap.release()
@@ -118,3 +117,7 @@ def main(users:str=None, callback:callable=None):
             db.insert_one("translations", data)
     if callback:
         callback(users)
+
+if __name__ == "__main__":
+    main()
+    
